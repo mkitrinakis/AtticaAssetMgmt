@@ -39,6 +39,7 @@ namespace AssetMgmt
         protected global::System.Web.UI.WebControls.Button BSubmit;
         protected global::System.Web.UI.WebControls.Button BBack;
         protected global::System.Web.UI.WebControls.Button BReject;
+        protected global::System.Web.UI.WebControls.Button BLoadFolderDetails; 
 
         protected global::System.Web.UI.WebControls.Label Composer;
         protected global::System.Web.UI.WebControls.Label History;
@@ -53,16 +54,28 @@ namespace AssetMgmt
         protected global::System.Web.UI.WebControls.Label L_From;
         protected global::System.Web.UI.WebControls.Label L_Building;
         protected global::Telerik.Web.UI.RadTextBox Comments;
-        protected global::Telerik.Web.UI.RadGrid folderRights;
+
+        protected global::System.Web.UI.WebControls.DropDownList FolderPrefix;
+        protected global::System.Web.UI.WebControls.TextBox FolderPostfix;
+
+        protected global::Telerik.Web.UI.RadGrid folderRights; // old 
+        protected global::Telerik.Web.UI.RadGrid folderRightsV2;
 
         protected global::Microsoft.SharePoint.WebControls.ClientPeoplePicker Name_1;
         protected global::Telerik.Web.UI.RadTextBox AM_1;
         
         protected global::System.Web.UI.WebControls.TextBox From;
-        protected global::Telerik.Web.UI.RadTextBox Folder_1;
+        
         protected global::System.Web.UI.WebControls.DropDownList AddRemove_1;
         protected global::System.Web.UI.WebControls.DropDownList Rights_1;
         protected global::System.Web.UI.WebControls.Label L_FolderGridErr;
-        protected global::System.Web.UI.WebControls.Panel panelAdd; 
+        protected global::System.Web.UI.WebControls.Panel panelAdd;
+
+        protected global::System.Web.UI.WebControls.Label L_Folder;
+        protected global::System.Web.UI.WebControls.Label L_LoadFolderDetailsErr;
+        protected global::System.Web.UI.WebControls.Label L_FolderChecked;
+        protected global::System.Web.UI.WebControls.Label L_FolderOldRights;
+        protected global::System.Web.UI.WebControls.Label FolderDiffs;
+
     }
 }

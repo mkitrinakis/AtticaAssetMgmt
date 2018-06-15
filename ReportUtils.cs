@@ -109,10 +109,47 @@ namespace AssetMgmt
         }
 
 
+        /// <summary>
+        /// FOLDER REPORTS 
+        /// </summary>
+        public SPListItem getLastItemByFolder(SPList l, string folder)
+        {
+            try
+            {
+                Guid webID = l.ParentWeb.ID;
+                Guid listID = l.ID;
+                Guid siteID = l.ParentWeb.Site.ID;
+                SPListItem itm = null;
+                SPSecurity.RunWithElevatedPrivileges(delegate ()
+                {
+                    using (SPSite siteElevated = new SPSite(siteID))
+                    {
+                        using (SPWeb webElevated = siteElevated.OpenWeb(webID))
+                        {
+                            SPList listElevated = webElevated.Lists[listID];
+                            SPQuery qry = new SPQuery();
+                            string sqry = "<Eq> <FieldRef Name='_status'/><Value Type='Text'>closed</Value> </Eq>";
+                            sqry = "<And>" + "<Eq> <FieldRef Name='Folder'/><Value Type='Text'>" + folder + "</Value> </Eq>" + sqry + "</And>";
+                            sqry = "<Where>" + sqry + "</Where>";
+                            sqry += "<OrderBy> <FieldRef Name='Implemented' Ascending='FALSE'/></OrderBy>";
+
+                            qry.Query = sqry;
+                            // qry.ViewFields = "<FieldRef Name='Implemented'/><FieldRef Name='Title'/><FieldRef Name='Serial'/><FieldRef Name='Implemented'/>";
+
+                            SPListItemCollection col = listElevated.GetItems(qry);
+                            if (col.Count > 0) { itm = col[0]; };
+                        }
+                    }
+                });
+                return itm;
+            }
+            catch (Exception e) { Error += "getLastItemByFolder -->" + e.Message; return null; }
+        }
 
 
 
-      
+
+
         struct LastItem
         {
             public int id;
