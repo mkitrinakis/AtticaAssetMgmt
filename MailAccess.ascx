@@ -2,6 +2,7 @@
 <%@ Register Tagprefix="Telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI, Version=2010.1.519.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4" %>
 <%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %> 
 <%@ Register Tagprefix="Utilities" Namespace="Microsoft.SharePoint.Utilities" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+<%@ Register src="AdminPanel.ascx" tagname="AdminPanel" tagprefix="custom" %>
  <%@ Import Namespace="Microsoft.SharePoint" %>
  <%@ Import Namespace="Microsoft.SharePoint.WebControls" %>
  <%@ Assembly Name="Microsoft.Web.CommandUI, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %> <%@ Register Tagprefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
@@ -10,7 +11,7 @@
   <link rel="stylesheet" href="/_layouts/15/_custom/css/form.css" type="text/css"/>
 <script type="javascript">
     /* IE11 Fix for SP2010 */
-    if (typeof(UserAgentInfo) != 'undefined' && !window.addEventListener) 
+    if (typeof(UserAgentInfo) != 'undefined' && !window.addEventListener)             
     {
         UserAgentInfo.strBrowser=1; 
     } 
@@ -35,7 +36,7 @@
     }
 </style>
 
-
+<custom:AdminPanel ID="adminPanel" runat="server" />    
 <asp:Panel ID="panelMain" runat="server" >
 <div id="errorContainer">
     </div>

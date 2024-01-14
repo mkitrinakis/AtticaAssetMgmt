@@ -91,13 +91,82 @@ namespace AssetMgmt {
         protected global::System.Web.UI.WebControls.Label L_ArotronGroup;
         protected global::System.Web.UI.WebControls.Label L_EndDate;
         protected global::System.Web.UI.WebControls.Label L_ddlApprover;
+       
+
 
         protected global::System.Web.UI.WebControls.Panel panelT24;
         protected global::System.Web.UI.WebControls.Panel panelWindows;
         protected global::System.Web.UI.WebControls.Panel panelOracle;
         protected global::System.Web.UI.WebControls.Panel panelArotron;
         protected global::System.Web.UI.WebControls.Panel panelOS;
+        protected global::System.Web.UI.WebControls.Panel panelMOTIVIAN;
+        protected global::System.Web.UI.WebControls.Panel panelFACTORING;
+        protected global::System.Web.UI.WebControls.Panel panelNEWTON;
+        protected global::System.Web.UI.WebControls.Panel panelImportExport;
+        protected global::System.Web.UI.WebControls.Panel panelSWIFT;
+        protected global::System.Web.UI.WebControls.Panel panelAssesments;
+        protected global::System.Web.UI.WebControls.Panel panelFCMAML;
+        protected global::System.Web.UI.WebControls.Panel panelDocumentManagement;
+        protected global::System.Web.UI.WebControls.Panel panelLeasing;
+        protected global::System.Web.UI.WebControls.Panel panelEthicsCode;
+        protected global::System.Web.UI.WebControls.Panel panelBankAttachments;
+        protected global::System.Web.UI.WebControls.Panel panelSCANHRMS;
+        protected global::System.Web.UI.WebControls.Panel panelSpring; 
+
+
+        protected global::System.Web.UI.WebControls.DropDownList NEWTONAccess;
+        protected global::System.Web.UI.WebControls.DropDownList ImportExportAccess;
+        protected global::System.Web.UI.WebControls.DropDownList SWIFTAccess;
+        protected global::System.Web.UI.WebControls.DropDownList AssesmentsAccess;
+        protected global::System.Web.UI.WebControls.DropDownList FCMAMLAccess;
+        protected global::System.Web.UI.WebControls.DropDownList MOTIVIANAccess;
+        protected global::System.Web.UI.WebControls.DropDownList FACTORINGAccess;
+        protected global::System.Web.UI.WebControls.DropDownList LeasingAccess;
+        protected global::System.Web.UI.WebControls.DropDownList EthicsCodeAccess;
+        protected global::System.Web.UI.WebControls.DropDownList BankAttachmentsAccess;
+        protected global::System.Web.UI.WebControls.DropDownList SCANHRMSAccess;
+        protected global::System.Web.UI.WebControls.DropDownList SpringAccess;
+        protected global::System.Web.UI.WebControls.DropDownList DM_LMD_Customers;
+        protected global::System.Web.UI.WebControls.DropDownList DM_IMPEX;
+        protected global::System.Web.UI.WebControls.DropDownList DM_DANEIA;
+        protected global::System.Web.UI.WebControls.DropDownList DM_BOA_AITISEIS;
+        protected global::System.Web.UI.WebControls.DropDownList DM_BOA;
+        protected global::System.Web.UI.WebControls.DropDownList DM_BOA_ML_LIB;
+        protected global::System.Web.UI.WebControls.DropDownList DM_BOA_HR_LIB;
+        protected global::System.Web.UI.WebControls.DropDownList DM_BOA_LEGAL_LIB;
+        protected global::System.Web.UI.WebControls.DropDownList DM_XORHGHSEIS;
+        protected global::System.Web.UI.WebControls.TextBox DM_Branch;
+
+        
+        protected global::System.Web.UI.WebControls.Label L_NEWTONAccess;
+        protected global::System.Web.UI.WebControls.Label L_ImportExportAccess;
+        protected global::System.Web.UI.WebControls.Label L_SWIFTAccess;
+        protected global::System.Web.UI.WebControls.Label L_AssesmentsAccess;
+        protected global::System.Web.UI.WebControls.Label L_FCMAMLAccess;
+        protected global::System.Web.UI.WebControls.Label L_MOTIVIANAccess;
+        protected global::System.Web.UI.WebControls.Label L_FACTORINGAccess;
+        protected global::System.Web.UI.WebControls.Label L_LeasingAccess;
+        protected global::System.Web.UI.WebControls.Label L_EthicsCodeAccess;
+        protected global::System.Web.UI.WebControls.Label L_BankAttachmentsAccess;
+        protected global::System.Web.UI.WebControls.Label L_SCANHRMSAccess;
+        protected global::System.Web.UI.WebControls.Label L_SpringAccess; 
+        protected global::System.Web.UI.WebControls.Label L_DM_LMD_Customers;
+        protected global::System.Web.UI.WebControls.Label L_DM_IMPEX;
+        protected global::System.Web.UI.WebControls.Label L_DM_DANEIA;
+        protected global::System.Web.UI.WebControls.Label L_DM_BOA_AITISEIS;
+        protected global::System.Web.UI.WebControls.Label L_DM_BOA;
+        protected global::System.Web.UI.WebControls.Label L_DM_BOA_ML_LIB;
+        protected global::System.Web.UI.WebControls.Label L_DM_BOA_HR_LIB;
+        protected global::System.Web.UI.WebControls.Label L_DM_BOA_LEGAL_LIB;
+        protected global::System.Web.UI.WebControls.Label L_DM_XORHGHSEIS;
+        protected global::System.Web.UI.WebControls.Label L_DM_Branch; 
+
+
 
         protected global::Telerik.Web.UI.RadTextBox Comments;
+
+     
+
+
     }
 }

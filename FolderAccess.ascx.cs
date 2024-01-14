@@ -23,6 +23,11 @@ namespace AssetMgmt
             {
                 Building.Items.AddRange(utils.getListItemsAsDialogList(itm.Web, "Building"));
                 FolderPrefix.Items.AddRange(utils.getListItemsAsDialogList(itm.Web, "RootFolders"));
+                if (itm.ID > 0)
+                {
+                    utils.EnsureDropDownList(itm, "Building", ref Building);
+                    
+                }
                 if (itm.ID > 0) { getFromBack(itm); } // not a new document ; 
                 
                 validateHides();
@@ -35,9 +40,10 @@ namespace AssetMgmt
             {
                 // L_Errors.Text = (itm["Approver"] ?? "N/A").ToString() + " ^^^ " + (itm["WaitingApprover"] ?? "N/A").ToString() + " ^^^ " + (itm["Composer"] ?? "N/A").ToString() + " ^^^^^^" + (itm["Author"] ?? "N/A").ToString(); 
                  FolderDiffs.Text = getFolderDiffs(itm);
+                if (itm.ID < 25 && (itm["RightsV2"] ?? "").ToString().Equals("")) { folderRightsV2.Visible = false; } // DO NOT SHOW NEW VERSION IN OLD DOCUMENTS 
             }
            
-            if (itm.ID < 30) { folderRightsV2.Visible = false;  } // DO NOT SHOW NEW VERSION IN OLD DOCUMENTS 
+            
         }
         private void validateHides() // custom
         {
@@ -71,6 +77,8 @@ namespace AssetMgmt
                     BSubmit.Text = (itm["_status"] ?? "").ToString().Trim().Equals("pendingImplementation") ? "Υλοποιηση" : "Εγκριση";
                     ddlApprover.Visible = false;
                     BLoadFolderDetails.Visible = false;
+                    folderRightsV2.Columns[3].Visible = false;
+                    folderRights.Columns[4].Visible = false;
                 }
             }
             else // is not waiting approver 
@@ -84,6 +92,9 @@ namespace AssetMgmt
                 L_Comments.Visible = false;
                 ddlApprover.Visible = false;
                 BLoadFolderDetails.Visible = false;
+                folderRightsV2.Columns[3].Visible = false;
+                folderRights.Columns[4].Visible = false;
+
             }
         }
 
@@ -95,6 +106,9 @@ namespace AssetMgmt
                 
               SPListItem itm = SPContext.Current.ListItem;
                 L_Error.Text = "";
+                string _status = "";
+                if (itm.ID > 0) { _status = (itm["_status"] ?? "").ToString(); }
+                if (!_status.Equals("") && !_status.Equals("back") && !_status.Equals("draft")) return true;
                 string[] textFields = new string[] { "From#Από", "FolderPostfix#Folder" };
                 string[] ddlFields = new string[] { "Building#Κτίριο", "FolderPrefix#Root Folder" };
                 ArrayList textFieldsExtra = new ArrayList();
@@ -169,7 +183,7 @@ From.Visible = showEdit;
             folderRights.DataBind();
             folderRightsV2.DataSource = RightsListV2;
             folderRightsV2.DataBind();
-            if (RightsList.Count.Equals(0)) { folderRights.Visible = false;  }
+            if (RightsList.Count.Equals(0)) { panelOld.Visible = false;  }
            
         }
 
@@ -192,12 +206,20 @@ From.Visible = showEdit;
         {
             try
             {
-                L_Errors.Text = "";
-                if (validateData())
+
+                AssetMgmtUtils utils = new AssetMgmtUtils();
+                SPListItem itm = SPContext.Current.ListItem;
+                if (!utils.isSubmitted(itm))
                 {
-                    AssetMgmtUtils utils = new AssetMgmtUtils();
-                    SPListItem itm = SPContext.Current.ListItem;
-                    saveToBack(itm);
+
+                    if (validateData())
+                    {
+                        saveToBack(itm);
+                        utils.BSubmit_ClickStandard(itm, panelMain, Page);
+                    }
+                }
+                else
+                {
                     utils.BSubmit_ClickStandard(itm, panelMain, Page);
                 }
             }
@@ -210,7 +232,7 @@ From.Visible = showEdit;
             {
                 AssetMgmtUtils utils = new AssetMgmtUtils();
                 SPListItem itm = SPContext.Current.ListItem;
-                saveToBack(itm);
+              
                 utils.BBack_ClickStandard(itm, panelMain, Page);
 
             }
@@ -223,7 +245,7 @@ From.Visible = showEdit;
             {
                 AssetMgmtUtils utils = new AssetMgmtUtils();
                 SPListItem itm = SPContext.Current.ListItem;
-                saveToBack(itm);
+             
                 utils.BReject_ClickStandard(itm, panelMain, Page);
 
             }
@@ -369,10 +391,23 @@ From.Visible = showEdit;
 
         private string validateFolder(bool isSubmit)
         {
+            string folderPostfix = FolderPostfix.Text;
+            char[] notValid = new char[] { 'ά', 'έ', 'ή', 'ί', 'ό', 'ύ', 'ώ', 'Ά', 'Έ', 'Ή', 'Ί', 'Ό', 'Ύ', 'Ώ' };
+            bool notValidFound = false; 
+            foreach (char c in notValid)
+            {
+                if (folderPostfix.IndexOf(c) != -1)
+                {
+                    return "Στο όνομα του folder δεν επιτρέπονται οι ελληνικοί χαρακτήρες όταν είναι τονούμενοι. ";
+                }
+            }
+            
             if (isSubmit && !(FolderPrefix.SelectedValue + FolderPostfix.Text).Trim().Equals(L_FolderChecked.Text.Trim(), StringComparison.InvariantCulture))
             {
                 return  "Πρέπει να πατήσετε το 'Τρέχουσα Εικόνα Folder', για το folder που έχετε επιλέξει. ";
             }
+
+           
             return ""; 
         }
 
@@ -447,7 +482,7 @@ From.Visible = showEdit;
         {
             if (L_FolderOldRights.Text.Trim().Equals(""))
             {
-                return "To αίτημα είναι το 1ο για την συγκεκριμένη email address";
+                return "To αίτημα είναι το 1ο για το συγκεκριμένο folder";
             }
             string rs = "";
             string before = L_FolderOldRights.Text;

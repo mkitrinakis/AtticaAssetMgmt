@@ -1,6 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="SystemAccess.ascx.cs" Inherits="AssetMgmt.SystemAccess" %>
 <%@ Register Tagprefix="Telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI, Version=2010.1.519.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4" %>
 <%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %> 
+<%@ Register src="AdminPanel.ascx" tagname="AdminPanel" tagprefix="custom" %>
+
 <script src="/_layouts/_custom/js/jquery-3.2.1.min.js"></script>
   <link rel="stylesheet" href="/_layouts/15/_custom/css/form.css" type="text/css"/>
 
@@ -13,7 +15,7 @@
     } 
 </script>
 
-
+<custom:AdminPanel ID="adminPanel" runat="server" />       
 
 <asp:Panel ID="panelMain" runat="server" >
 <div id="errorContainer">
@@ -74,12 +76,31 @@
 <p>
     </p>
 <asp:UpdatePanel ID="UpdatePanel1" runat="server"><ContentTemplate>
-     <asp:CheckBoxList ID="Systems" runat="server" RepeatDirection="Horizontal" AutoPostBack="true" >
+     <asp:CheckBoxList ID="Systems" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" AutoPostBack="true" >
         <asp:ListItem>T24</asp:ListItem>
          <asp:ListItem>WINDOWS</asp:ListItem>
-        <asp:ListItem>ORACLE</asp:ListItem>
+        
         <asp:ListItem>AROTRON</asp:ListItem>
         <asp:ListItem>U/SWITCHWARE</asp:ListItem>
+         <asp:ListItem>ORACLE</asp:ListItem>
+          <asp:ListItem>OMNIA Ebanking</asp:ListItem>  
+          <asp:ListItem>NEWTON</asp:ListItem>
+          <asp:ListItem>ΕΙΣΑΓΩΓΕΣ-ΕΞΑΓΩΓΕΣ</asp:ListItem>   
+          <asp:ListItem>SWIFT</asp:ListItem>
+          <asp:ListItem>ΕΚΤΙΜΗΣΕΙΣ</asp:ListItem>
+          <asp:ListItem>FCM AML</asp:ListItem>
+          <asp:ListItem>MOTIVIAN</asp:ListItem>     
+         <asp:ListItem>Leasing</asp:ListItem>     
+         <asp:ListItem>FACTORING</asp:ListItem>     
+         <asp:ListItem>UTS FIRST DATA</asp:ListItem>     
+         <asp:ListItem>ΔΙΑΧΕΙΡΙΣΗ ΚΩΔΙΚΑ ΔΕΟΝΤΟΛΟΓΙΑΣ</asp:ListItem>
+         <asp:ListItem>E-ΚΑΤΑΣΧΕΤΗΡΙΑ</asp:ListItem>
+         <asp:ListItem>BUSINESS OBJECT</asp:ListItem>
+         <asp:ListItem>ΑΚΙΝΗΤΑ THESIS.NET</asp:ListItem>
+         <asp:ListItem>CCR Κινήσεις Πιστωτικών Καρτών & Ανοικτών Δανείων</asp:ListItem>  
+         <asp:ListItem>SCAN-HRMS</asp:ListItem>     
+         <asp:ListItem>ΣΜΠΚ</asp:ListItem>   
+         <asp:ListItem>α/σ-Spring</asp:ListItem>     
     </asp:CheckBoxList>
 
       <br />
@@ -100,8 +121,10 @@
     <asp:Label ID="L_Subject" runat="server" Text=""></asp:Label>
         </td>
     </tr>
-    <tr>
-        <td class="col2label required" >Άλλο</td>  
+   
+       
+         <tr>
+        <td class="col2label" >Άλλα Συστήματα Εκτός Λίστας</td>  
         <td class="col2value"> 
             <asp:TextBox ID="SubjectOther" runat="server" >
             </asp:TextBox>
@@ -112,7 +135,7 @@
         </table>
 
       <asp:Label ID="L_Systems" runat="server" Text="" style="font-weight: 700"></asp:Label>
-
+       
 
    
 <table>
@@ -232,50 +255,158 @@
 
           </asp:Panel>
 
-      <asp:Panel ID="panelOracle" runat="server" > 
-          <p>
-    &nbsp;</p>
-<table>
-    <tr>
-        <th >Για ORACLE</th>
-    </tr>
-    <tr>
-          <td><asp:DropDownList ID="OracleAccess" runat="server" ><asp:ListItem Value="-Επιλέξτε-" /> <asp:ListItem Value="ΚΑΤΑΧΩΡΗΣΗ" /><asp:ListItem Value="ΕΓΚΡΙΣΗ" /><asp:ListItem Value="ΠΡΟΒΟΛΗ ΣΤΟΙΧΕΙΩΝ" /></asp:DropDownList>
-    <asp:Label ID="L_OracleAccess" runat="server" Text=""></asp:Label>
-          </td>
-    </tr>
-  
-</table>
-
-          </asp:Panel>
+      
 
       <asp:Panel ID="panelArotron" runat="server" > 
-          <p>
-    &nbsp;</p>
-<table>
-    <tr>
-        <th colspan="2">Για AROTRON</th>
-        
-    </tr>
-    <tr>
-        <td class="col2label required">* Ρόλος στην Ομάδα</td>
-        <td class="col2value"> 
-<asp:TextBox ID="ArotronRole" runat="server"></asp:TextBox>
-        <asp:Label ID="L_ArotronRole" runat="server" Text=""></asp:Label>      
-        </td>
-    </tr>
-    <tr>
-        <td class="col2label required">* Ομάδα Εργασίας</td>
-        <td class="col2value"> 
-<asp:TextBox ID="ArotronGroup" runat="server"></asp:TextBox>
-        <asp:Label ID="L_ArotronGroup" runat="server" Text=""></asp:Label>    
-        </td>
-    </tr>
+          <p>&nbsp;</p>
+<table><tr><th colspan="2">Για AROTRON</th></tr>
+    <tr><td class="col2label required">* Ρόλος στην Ομάδα</td>
+        <td class="col2value"> <asp:TextBox ID="ArotronRole" runat="server"></asp:TextBox>
+        <asp:Label ID="L_ArotronRole" runat="server" Text=""></asp:Label>        
+        </td></tr>
+    <tr><td class="col2label required">* Ομάδα Εργασίας</td>
+        <td class="col2value"> <asp:TextBox ID="ArotronGroup" runat="server"></asp:TextBox><asp:Label ID="L_ArotronGroup" runat="server" Text=""></asp:Label></td></tr>
 </table>
           </asp:Panel>
+      <asp:Panel ID="panelDocumentManagement" runat="server" >             
+          <p>&nbsp;</p>
+<table>
+<tr><th colspan="4">Για Document Management</th></tr>  
+       <tr><td colspan="4">Επιλέξτε το είδος πρόσβασης που αιτούστε ανά βιβλιοθήκη,αφήστε κενό για τις υπόλοιπες </td></tr>
+  <tr> <td class="col4label">LMD_Customers </td>
+      <td class="col4value"><asp:DropDownList ID="DM_LMD_Customers" runat="server" ></asp:DropDownList><asp:Label ID="L_DM_LMD_Customers" runat="server" Text=""></asp:Label></td>
+<td class="col4label">IMPEX</td>
+      <td class="col4value"><asp:DropDownList ID="DM_IMPEX" runat="server" ></asp:DropDownList><asp:Label ID="L_DM_IMPEX" runat="server" Text=""></asp:Label></td></tr>
+<tr> <td class="col4label">DANEIA</td>
+    <td class="col4value"><asp:DropDownList ID="DM_DANEIA" runat="server" ></asp:DropDownList><asp:Label ID="L_DM_DANEIA" runat="server" Text=""></asp:Label></td>
+<td class="col4label">BOA_AITISEIS</td>
+    <td class="col4value"><asp:DropDownList ID="DM_BOA_AITISEIS" runat="server" ></asp:DropDownList><asp:Label ID="L_DM_BOA_AITISEIS" runat="server" Text=""></asp:Label></td></tr>
+<tr> <td class="col4label">BOA</td>
+    <td class="col4value"><asp:DropDownList ID="DM_BOA" runat="server" ></asp:DropDownList><asp:Label ID="L_DM_BOA" runat="server" Text=""></asp:Label></td>
+<td class="col4label">BOA_ML_LIB</td>
+    <td class="col4value"><asp:DropDownList ID="DM_BOA_ML_LIB" runat="server" ></asp:DropDownList><asp:Label ID="L_DM_BOA_ML_LIB" runat="server" Text=""></asp:Label></td></tr>
+<tr> <td class="col4label">BOA_HR_LIB</td>
+    <td class="col4value"><asp:DropDownList ID="DM_BOA_HR_LIB" runat="server" ></asp:DropDownList><asp:Label ID="L_DM_BOA_HR_LIB" runat="server" Text=""></asp:Label></td>
+<td class="col4label">BOA_LEGAL_LIB</td>
+    <td class="col4value"><asp:DropDownList ID="DM_BOA_LEGAL_LIB" runat="server" ></asp:DropDownList><asp:Label ID="L_DM_BOA_LEGAL_LIB" runat="server" Text=""></asp:Label></td></tr>
+<tr><td class="col4label">XORHGHSEIS</td>
+    <td class="col4value"><asp:DropDownList ID="DM_XORHGHSEIS" runat="server" ></asp:DropDownList><asp:Label ID="L_DM_XORHGHSEIS" runat="server" Text=""></asp:Label></td>
+   <td class="col4label">Επωνυμία Καταστήματος</td>
+    <td class="col4value"> <asp:TextBox ID="DM_Branch" runat="server"></asp:TextBox><asp:Label ID="L_DM_Branch" runat="server" Text=""></asp:Label></td></tr>
+  
+  </table>
+          </asp:Panel>  
 
+    <asp:Panel ID="panelOracle" runat="server" >   
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">ORACLE (Δικαιώματα)</td><td><asp:DropDownList ID="OracleAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_OracleAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+   
+
+     <asp:Panel ID="panelNEWTON" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">NEWTON (Δικαιώματα)</td><td><asp:DropDownList ID="NEWTONAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_NEWTONAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+     <asp:Panel ID="panelImportExport" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">Εισαγωγές Εξαγωγές (Δικαιώματα)</td><td><asp:DropDownList ID="ImportExportAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_ImportExportAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+     <asp:Panel ID="panelSWIFT" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">SWIFT (Δικαιώματα)</td><td><asp:DropDownList ID="SWIFTAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_SWIFTAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+  
+
+     <asp:Panel ID="panelAssesments" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">Εκτιμήσεις (Δικαιώματα)</td><td><asp:DropDownList ID="AssesmentsAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_AssesmentsAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+     
+
+     <asp:Panel ID="panelFCMAML" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">FCM AML (Δικαιώματα) </td><td><asp:DropDownList ID="FCMAMLAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_FCMAMLAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+        <asp:Panel ID="panelMOTIVIAN" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    
+    <tr><td class="col2label required">MOTIVIAN (Δικαιώματα)</td></td><td><asp:DropDownList ID="MOTIVIANAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_MOTIVIANAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+    <asp:Panel ID="panelLeasing" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    
+    <tr><td class="col2label required">Leasing (Δικαιώματα)</td></td><td><asp:DropDownList ID="LeasingAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_LeasingAccess" runat="server" Text=""></asp:Label></td></tr>  
+  </table>
+          </asp:Panel>
+
+     <asp:Panel ID="panelFACTORING" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">FACTORING (Δικαιώματα)</td><td><asp:DropDownList ID="FACTORINGAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_FACTORINGAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+    <asp:Panel ID="panelEthicsCode" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">Διαχείριση Κώδικα Δεοντολογίας (Δικαιώματα)</td><td><asp:DropDownList ID="EthicsCodeAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_EthicsCodeAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+     <asp:Panel ID="panelBankAttachments" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">E-ΚΑΤΑΣΧΕΤΗΡΙΑ (Δικαιώματα)</td><td><asp:DropDownList ID="BankAttachmentsAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_BankAttachmentsAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>  
+          </asp:Panel>
+
+     <asp:Panel ID="panelSCANHRMS" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">SCAN-HRMS (Δικαιώματα)</td><td><asp:DropDownList ID="SCANHRMSAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_SCANHRMSAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+  <asp:Panel ID="panelSpring" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required"> α/σ-Spring (Δικαιώματα)</td><td><asp:DropDownList ID="SpringAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_SpringAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
     </ContentTemplate>
-</asp:UpdatePanel>
+</asp:UpdatePanel>    
 <p>
    
 </p>

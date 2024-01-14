@@ -27,6 +27,12 @@ namespace AssetMgmt
             {
                 Building.Items.AddRange(utils.getListItemsAsDialogList(SPContext.Current.Web, "Building"));
                 EMailAddressPostfix.Items.AddRange(utils.getListItemsAsDialogList(SPContext.Current.Web, "EMailAddressPostfix"));
+                if (itm.ID>0)
+                {
+                    utils.EnsureDropDownList(itm, "Building", ref Building);
+                    utils.EnsureDropDownList(itm, "EMailAddressPostfix", ref EMailAddressPostfix);
+                }
+
                 if (itm.ID > 0) { getFromBack(itm); } // not a new document
                 validateHides();
             }
@@ -68,6 +74,7 @@ namespace AssetMgmt
                     L_Comments.Visible = false;
                     ddlApprover.Visible = true;
                     
+                    
     }
                 if (!isDraft)
                 {
@@ -80,6 +87,8 @@ namespace AssetMgmt
                     BReject.Visible = isWaitingApprover;
                     BSubmit.Text = (itm["_status"] ?? "").ToString().Trim().Equals("pendingImplementation") ? "Υλοποιηση" : "Εγκριση";
                     ddlApprover.Visible = false;
+                    SendAs.Columns[1].Visible = false;
+                    ForwardTo.Columns[1].Visible = false;
                 }
             }
             else // is not waiting approver 
@@ -92,9 +101,12 @@ namespace AssetMgmt
                 Comments.Visible = false;
                 L_Comments.Visible = false;
                 ddlApprover.Visible = false;
-
+                SendAs.Columns[1].Visible = false;
+                ForwardTo.Columns[1].Visible = false;
             }
         }
+
+      
 
         private bool validateData()
         {
@@ -102,6 +114,8 @@ namespace AssetMgmt
             {
                 SPListItem itm = SPContext.Current.ListItem;
                 L_Error.Text = "";
+                string _status = "";
+                
                 string[] textFields = new string[] { "From#Από", "DisplayName#Display Name", "EMailAddressPrefix#EMail Address" };
                 string[] ddlFields = new string[] { "Building#Κτίριο", "EMailAddressPostfix#EMail Address (Domain)" };
                 ArrayList textFieldsExtra = new ArrayList();
@@ -157,13 +171,20 @@ namespace AssetMgmt
         {
             try
             {
-                L_Errors.Text = "";
-                if (validateData())
+                
+                AssetMgmtUtils utils = new AssetMgmtUtils();
+                SPListItem itm = SPContext.Current.ListItem;
+                if (!utils.isSubmitted(itm))
                 {
-                    AssetMgmtUtils utils = new AssetMgmtUtils();
-                    SPListItem itm = SPContext.Current.ListItem;
-                    saveToBack(itm);
-                    itm = itm.ParentList.GetItemById(itm.ID);  // get the item from the back end 
+
+                    if (validateData())
+                    {
+                        saveToBack(itm);
+                        utils.BSubmit_ClickStandard(itm, panelMain, Page);
+                    }
+                }
+                else
+                {
                     utils.BSubmit_ClickStandard(itm, panelMain, Page);
                 }
             }
@@ -174,9 +195,8 @@ namespace AssetMgmt
         {
             try
             {
-                AssetMgmtUtils utils = new AssetMgmtUtils();
                 SPListItem itm = SPContext.Current.ListItem;
-                saveToBack(itm);
+                AssetMgmtUtils utils = new AssetMgmtUtils();
                 utils.BBack_ClickStandard(itm, panelMain, Page);
 
             }
@@ -187,9 +207,8 @@ namespace AssetMgmt
         {
             try
             {
-                AssetMgmtUtils utils = new AssetMgmtUtils();
                 SPListItem itm = SPContext.Current.ListItem;
-                saveToBack(itm);
+                AssetMgmtUtils utils = new AssetMgmtUtils();
                 utils.BReject_ClickStandard(itm, panelMain, Page);
 
             }
@@ -219,7 +238,7 @@ namespace AssetMgmt
                 itm["MaxRecipients"] = MaxRecipients.Text;
                 itm["ForwardTo"] = gu.serializeSimpleGrid((List<GridUtils.NameStruct>)ViewState["myForwardToList"]);
                 itm["SendAs"] = gu.serializeSimpleGrid((List<GridUtils.NameStruct>)ViewState["mySendAsList"]);
-                itm.SystemUpdate();
+              //  itm.SystemUpdate();, in this version Update only from Utils. 
             }
             catch (Exception e) { L_Error.Text += " --saveToBack:" + e.Message; }
 

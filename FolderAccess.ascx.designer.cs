@@ -34,6 +34,7 @@ namespace AssetMgmt
         /// </remarks>
         /// 
         protected global::System.Web.UI.WebControls.Panel panelMain;
+        protected global::System.Web.UI.WebControls.Panel panelOld;
 
         protected global::System.Web.UI.WebControls.Button BSave;
         protected global::System.Web.UI.WebControls.Button BSubmit;

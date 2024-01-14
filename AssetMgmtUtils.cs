@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections; 
 using System.Collections.Generic;
 using System.Collections.Specialized;  
 using System.Web;
@@ -6,14 +7,16 @@ using Microsoft.SharePoint;
 using Microsoft.SharePoint.WebControls; 
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Telerik.Web.UI; 
+using Telerik.Web.UI;
+using System.Linq; 
 
 namespace AssetMgmt
 {
     public class AssetMgmtUtils
     {
         public string err = "";
-        public System.Drawing.Color errColor = System.Drawing.Color.LightPink; 
+        public System.Drawing.Color errColor = System.Drawing.Color.LightPink;
+       
         public void initStandard(Panel panelMain)
         {
             SPListItem itm = SPContext.Current.ListItem;
@@ -90,6 +93,36 @@ namespace AssetMgmt
 
            
             return rs; 
+        }
+
+
+        public ListItem[] getListItemsFromKeywordsList(SPWeb web, string keywordName)
+        {
+            List<ListItem> rs = new List<ListItem>();
+
+            try
+            {
+                SPList l = web.Lists["Keywords"];
+                SPQuery qry = new SPQuery();
+                string sqry = "<Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" + keywordName + "</Value></Eq></Where>";
+                qry.Query = sqry; 
+                //qry.Query = "<OrderBy><FieldRef Name='Title' Ascending='True'/> </OrderBy>";
+                //qry.ViewFields = "<FieldRef Name='Title'/>";
+                SPListItemCollection col = l.GetItems(qry);
+                rs.Add(new ListItem() { Value = "", Text = "-Επιλέξτε-" });
+                if (col.Count>0) {
+                    SPListItem kitm = col[0];
+                    string[] values = (kitm["Value"] ?? "").ToString().Split(new char[] { '~' }, StringSplitOptions.RemoveEmptyEntries); 
+                    List<string> sorted = new List<string>(values);
+                    sorted.Sort();
+                    foreach (string el in sorted)
+                    {
+                        rs.Add(new ListItem(el));
+                    }
+                }
+                return rs.ToArray();
+            }
+            catch (Exception e) { string error = "Error: " + e.Message; rs.Add(new ListItem() { Text = error }); return rs.ToArray(); }
         }
 
 
@@ -233,7 +266,7 @@ namespace AssetMgmt
             if (tmp.Equals("back")) return "pendingApproval1#ΕΚΚΡΕΜΕΙ ΕΓΚΡΙΣΗ";
             if (tmp.Equals("pendingApproval1")) return "pendingImplementation#ΕΚΚΡΕΜΕΙ ΥΛΟΠΟΙΗΣΗ#";
             if (tmp.Equals("pendingImplementation")) return "closed#ΕΚΛΕΙΣΕ";
-            if (tmp.Equals("rejected")) return "rejected#ΕΑΠΟΡΡΙΦΘΗΚΕ";
+            if (tmp.Equals("rejected")) return "rejected#ΑΠΟΡΡΙΦΘΗΚΕ";
             if (tmp.Equals("closed")) return "closed#ΕΚΛΕΙΣΕ";
             return _status;
         }
@@ -485,6 +518,29 @@ namespace AssetMgmt
         {
             try
             {
+                SPList lSerial = itm.Web.Lists["Profile"];
+                int iSerial = -1;
+                foreach (SPListItem temp in lSerial.Items)
+                {
+                    if (temp.Title.Equals("Serial"))
+                    {
+                        if (int.TryParse((temp["Value"] ?? "0").ToString(), out iSerial))
+                        {
+                            temp["Value"] = (iSerial + 1).ToString(); temp.SystemUpdate();
+                            break;
+                        }
+                    }
+                }
+                if (iSerial > -1) { itm["Serial"] = iSerial; }
+            }
+            catch (Exception e) { err += "getSerial:" + e.Message;  }
+        }
+    
+
+        private void getSerialElevated(SPListItem itm)
+        {
+            try
+            {
                 SPSecurity.RunWithElevatedPrivileges(delegate ()
                 {
                     using (SPSite eSite = new SPSite(itm.Web.Site.ID))
@@ -526,7 +582,7 @@ namespace AssetMgmt
                 string approver = "";
                 string composer = ""; 
                 string from = "";
-               
+                string mailSeparator = getMailSeparator(web);
                 try {
                     List<SPPrincipal> composers = getFieldUsers(itm, "Composer");
                     composer = ((SPUser)composers[0]).Email;
@@ -552,8 +608,11 @@ namespace AssetMgmt
                 if (listTitle.Equals("SystemsAccess"))
                 {
                     string systems = (itm["Systems"] ?? "").ToString().ToUpper();
+                    string subjectOther = (itm["SubjectOther"] ?? "").ToString().Trim();
                     bool isForWindows = systems.ToUpper().Contains("WINDOWS");
-                    bool isForOther = systems.Contains("T24") || systems.Contains("ORACLE") || systems.Contains("SWITCHWARE") || systems.Contains("AROTRON");
+                    string other = systems.Replace( "WINDOWS", "");
+                     other = other.Replace( ",", "");
+                    bool isForOther = !other.Trim().Equals("") || !subjectOther.Equals("");
                     foreach (SPListItem temp in lcc.Items)
                     {
                         if (isForWindows && temp.Title.Equals("MailPendingImplementationWindows", StringComparison.InvariantCultureIgnoreCase))
@@ -564,7 +623,18 @@ namespace AssetMgmt
                         if (isForOther && temp.Title.Equals("MailPendingImplementationOther", StringComparison.InvariantCultureIgnoreCase))
                         {
                             implMails.Add((temp["Value"] ?? "").ToString());
+                        }
+                        if (!isWorkingHour(web))
+                        {
+                            if (isForWindows && temp.Title.Equals("MailPendingImplementationWindowsNonWorkingHours", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                implMails.Add((temp["Value"] ?? "").ToString());
 
+                            }
+                            if (isForOther && temp.Title.Equals("MailPendingImplementationOtherNonWorkingHours", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                implMails.Add((temp["Value"] ?? "").ToString());
+                            }
                         }
                     }
                 }
@@ -597,7 +667,7 @@ namespace AssetMgmt
                 {
                     
                     actionDisp = " περιμένει την ενέργειά σας";
-                   to = String.Join(",", implMails);
+                   to = String.Join(mailSeparator, implMails);
                     
                 }
 
@@ -626,18 +696,18 @@ namespace AssetMgmt
                     body += "<br/> Στο ιστορικό της αίτησης μπορείτε να δείτε την τεκμηρίωση της επιστροφής για διορθώσεις";
                     if (_previousStatus.Equals("pendingImplementation", StringComparison.InvariantCulture))
                     {
-                        cc = String.Join(",", implMails) + "," + approver;
+                        cc = String.Join(mailSeparator, implMails) + mailSeparator + approver;
                     }
                     else { cc = approver; }
                 }
                 if (_status.Equals("rejected")) { body += "<br/> Στο ιστορικό της αίτησης μπορείτε να δείτε την τεκμηρίωση της απόρριψης";
                     if (_previousStatus.Equals("pendingImplementation", StringComparison.InvariantCulture))
                     {
-                      cc =   String.Join(",", implMails) + "," + approver;
+                      cc =   String.Join(mailSeparator, implMails) + mailSeparator + approver;
                     }
                     else { cc = approver; }
                 } 
-                if (_status.Equals("closed")) { cc = String.Join(",", implMails) + "," + approver;  }
+                if (_status.Equals("closed")) { cc = String.Join(mailSeparator, implMails) + mailSeparator + approver;  }
 
                     messageHeaders.Add("to", to);
                 messageHeaders.Add("from", from);
@@ -647,7 +717,58 @@ namespace AssetMgmt
                 Microsoft.SharePoint.Utilities.SPUtility.SendEmail(web, messageHeaders, body);
                 writeLog(web, "SendMail", "to:" + to + ", cc:" + cc + ", subject:" + subject + ", body:" + body + ", _status:" + _status + ", approver:" + approver + ", composer:" + composer , false); 
             }
-            catch (Exception e) {  err += "sendWaitingMail:" + e.Message;  }
+            catch (Exception e) {  err += " sendWaitingMail:" + e.Message;  }
+        }
+
+
+        private string getMailSeparator(SPWeb web)
+        {
+            try
+            {
+                SPList lcc = web.Lists["Profile"];
+                foreach (SPListItem itm in lcc.Items)
+                {
+                    if (itm.Title.Equals("MailSeparator"))
+                    { return (itm["Value"] ?? ",").ToString().Trim(); }
+                }
+                return ",";
+            }
+            catch (Exception e) { err += " getMailSeparator:" + e.Message; return ","; }
+        }
+
+        private bool isWorkingHour(SPWeb web)
+        {
+            try
+            {
+                int from = 0;
+                int to = 100; 
+                SPList lcc = web.Lists["Profile"];
+                foreach (SPListItem itm in lcc.Items)
+                {
+                    if (itm.Title.Equals("WorkingHoursFrom")) from = getMinutesAsInt((itm["Value"] ?? "").ToString());
+                    if (itm.Title.Equals("WorkingHoursTo")) to = getMinutesAsInt((itm["Value"] ?? "").ToString());
+                    if (from < 0) from = 0; // err-handling 
+                    if (to < 0) to = 100; // err-handling 
+                }
+                DateTime dt = DateTime.Now;
+                int nowMM = getMinutesAsInt(dt.Hour.ToString() + "." + dt.Minute.ToString());
+                return (nowMM >= from && nowMM <= to); 
+            }
+            catch (Exception e) { err += " isWorkingHour:" + e.Message; return true; }
+        }
+
+        private int getMinutesAsInt(string val)
+        {
+            try {
+                string hh = val.Split('.')[0];
+                string mm = val.Split('.')[1];
+                return Convert.ToInt32(hh) * 100 + Convert.ToInt32(mm); 
+            }
+            catch (Exception e)
+            {
+                err += " getMinutesAsInt:" + e.Message;
+                return -1; 
+            }
         }
 
         public void BSave_ClickStandard(SPListItem itm, Panel panelMain, Page page)
@@ -709,12 +830,13 @@ namespace AssetMgmt
             setWaitingApprover(_newstatus, itm, "System");
             if (err.Trim().Equals(""))
             {
-                itm.Update();
-                
                 if (toGetSerial)
                 {
-                    getSerial(itm); 
+                    getSerial(itm);
                 }
+                itm.Update();
+                
+               
                 sendWaitingMail(itm.Web, itm, _previousStatus);
                 setListItemPermissions(itm, getWaitingApprover(itm));
                 if (!err.Trim().Equals(""))
@@ -779,6 +901,15 @@ namespace AssetMgmt
            
         }
 
+
+        public  bool isSubmitted(SPListItem itm)
+        {
+            string _status = "";
+            if (!(itm.ID > 0)) { return false; }
+            _status = (itm["_status"] ?? "").ToString();
+            if (!_status.Equals("") && !_status.Equals("back") && !_status.Equals("draft")) return true;
+            return false;
+        }
         private void addWrite(SPPrincipal pr, SPListItem item, SPWeb web)
         {
             try
@@ -795,6 +926,72 @@ namespace AssetMgmt
                 err += "--AddWrite:" + e.Message;
             }
         }
+
+
+
+        public SPFieldLookupValueCollection serializeMultiSelect(RadListBox rlist)
+        {
+            SPFieldLookupValueCollection fluc = new SPFieldLookupValueCollection(); 
+            foreach (RadListBoxItem rlbi in rlist.Items)
+            {
+                SPFieldLookupValue flu = new SPFieldLookupValue(Convert.ToInt32(rlbi.Value), rlbi.Text);
+                fluc.Add(flu);
+            }
+            return fluc; 
+        }
+
+        public void initMultiSelectSource(RadListBox sourceList, RadListBox targetList, SPList l)
+        {
+            bool onlyActive = (l.Fields.ContainsField("Active"));
+            List<string> rs = new List<string>();
+            Hashtable ht = new Hashtable();
+            List<string> alreadySelected = new List<string>();
+            foreach (RadListBoxItem i in targetList.Items) { alreadySelected.Add(i.Text); }
+
+            foreach (SPListItem itm in l.Items)
+            {
+                if (!onlyActive || ((bool)itm["Active"]))
+                {
+                    string title = itm.Title;
+                  
+                    if (!alreadySelected.Contains(title))
+                    {
+                        if (!ht.ContainsKey(itm.Title))
+                        {
+                            ht[title] = itm.ID;
+                            rs.Add(itm.Title);
+                        }
+                    }
+                }
+            }
+            rs.Sort();
+            foreach (string title in rs)
+            { sourceList.Items.Add(new RadListBoxItem(title,   ht[title].ToString())); }
+        }
+
+        public void trimMultiSelectSource(RadListBox sourceList, RadListBox targetList)
+        {
+            List<string> alreadySelected = new List<string>();
+            List<RadListBoxItem> toRemove = new List<RadListBoxItem>(); 
+            foreach (RadListBoxItem i in targetList.Items) { alreadySelected.Add(i.Text); }
+            foreach (RadListBoxItem i in sourceList.Items)
+            {
+                if (alreadySelected.Contains(i.Text)) { toRemove.Add (i); }
+            }
+
+            foreach (RadListBoxItem i in toRemove) { i.Remove();  }
+        }
+
+        public void deserializeMultiSelect (SPListItem itm, string fname, RadListBox rlist)
+        {
+            SPFieldLookupValueCollection fluc = new SPFieldLookupValueCollection((itm[fname] ?? "").ToString()); 
+            foreach (SPFieldLookupValue flu  in fluc)
+            {
+                RadListBoxItem i = new RadListBoxItem(flu.LookupValue, flu.LookupId.ToString());
+                rlist.Items.Add(i); 
+            }
+        }
+
 
 
         public SPFieldMultiChoiceValue serializeCheckbox(CheckBoxList cbList)
@@ -971,6 +1168,21 @@ namespace AssetMgmt
             log.Update(); 
         }
 
+        public void EnsureDropDownList(SPListItem itm, string fieldName,  ref DropDownList ddl)
+        {
+            if (itm.ID>0)
+            {
+                string val = (itm[fieldName] ?? "").ToString();
+                if (!val.Trim().Equals(""))
+                {
+                    foreach (ListItem li in ddl.Items)
+                    {
+                        if (li.Value.Equals(val)) return;
+                    }
+                    ddl.Items.Add(val);
+                }
+            }
+        }
 
        
     }

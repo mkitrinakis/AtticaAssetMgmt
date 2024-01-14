@@ -19,6 +19,49 @@ namespace AssetMgmt
             if (!Page.IsPostBack)
             {
                 Building.Items.AddRange(utils.getListItemsAsDialogList(itm.Web, "Building"));
+                OracleAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "OracleAccess"));
+                MOTIVIANAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "MOTIVIANAccess"));
+                FACTORINGAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "FACTORINGAccess"));
+                NEWTONAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "NEWTONAccess"));
+                SWIFTAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "SWIFTAccess"));
+                ImportExportAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "ImportExportAccess"));
+                AssesmentsAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "AssesmentsAccess"));
+                FCMAMLAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "FCMAMLAccess"));
+                LeasingAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "LeasingAccess"));
+                EthicsCodeAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "EthicsCodeAccess"));
+                BankAttachmentsAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "BankAttachmentsAccess"));
+                SCANHRMSAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "SCANHRMSAccess"));
+                SpringAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "SpringAccess"));
+                DM_LMD_Customers.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
+                DM_IMPEX.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
+                DM_DANEIA.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
+                DM_BOA_AITISEIS.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
+                DM_BOA.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
+                DM_BOA_ML_LIB.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
+                DM_BOA_HR_LIB.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
+                DM_BOA_LEGAL_LIB.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
+                DM_XORHGHSEIS.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
+
+               // SPList listSystems = SPContext.Current.Web.Lists["Systems"];
+               if (itm.ID>0)
+                {
+                    utils.EnsureDropDownList(itm, "Building", ref Building);
+                    utils.EnsureDropDownList(itm, "OracleAccess", ref OracleAccess);
+                    utils.EnsureDropDownList(itm, "MOTIVIANAccess", ref MOTIVIANAccess);
+                    utils.EnsureDropDownList(itm, "FACTORINGAccess", ref FACTORINGAccess);
+                    utils.EnsureDropDownList(itm, "NEWTONAccess", ref NEWTONAccess);
+                    utils.EnsureDropDownList(itm, "SWIFTAccess", ref SWIFTAccess);
+                    utils.EnsureDropDownList(itm, "ImportExportAccess", ref ImportExportAccess);
+                    utils.EnsureDropDownList(itm, "AssesmentsAccess", ref AssesmentsAccess);
+                    utils.EnsureDropDownList(itm, "FCMAMLAccess", ref FCMAMLAccess);
+                    utils.EnsureDropDownList(itm, "LeasingAccess", ref LeasingAccess);
+                    utils.EnsureDropDownList(itm, "EthicsCodeAccess", ref EthicsCodeAccess);
+                    utils.EnsureDropDownList(itm, "ImportExportAccess", ref ImportExportAccess);
+                    utils.EnsureDropDownList(itm, "BankAttachmentsAccess", ref BankAttachmentsAccess);
+                    utils.EnsureDropDownList(itm, "SCANHRMSAccess", ref SCANHRMSAccess);
+                    utils.EnsureDropDownList(itm, "SpringAccess", ref SpringAccess);
+                }
+           
                 if (itm.ID > 0) { getFromBack(itm); } // not a new document ; 
                 validateHides(); 
             }
@@ -39,7 +82,20 @@ namespace AssetMgmt
                 if (li.Value.Equals("ORACLE")) { panelOracle.Visible = li.Selected; }
                 if (li.Value.Equals("AROTRON")) { panelArotron.Visible = li.Selected; }
                 if (li.Value.Equals("U/SWITCHWARE")) { panelOS.Visible = li.Selected; }
-                
+                if (li.Value.Equals("MOTIVIAN")) { panelMOTIVIAN.Visible = li.Selected; }
+                if (li.Value.Equals("FACTORING")) { panelFACTORING.Visible = li.Selected; }
+                if (li.Value.Equals("NEWTON")) { panelNEWTON.Visible = li.Selected; }
+                if (li.Value.Equals("ΕΙΣΑΓΩΓΕΣ-ΕΞΑΓΩΓΕΣ")) { panelImportExport.Visible = li.Selected; }
+                if (li.Value.Equals("SWIFT")) { panelSWIFT.Visible = li.Selected; }
+                if (li.Value.Equals("ΕΚΤΙΜΗΣΕΙΣ")) { panelAssesments.Visible = li.Selected; }
+                if (li.Value.Equals("FCM AML")) { panelFCMAML.Visible = li.Selected; }
+                //   if (li.Value.Equals("Document Management")) { panelDocumentManagement.Visible = li.Selected; }
+                panelDocumentManagement.Visible = false; 
+                if (li.Value.Equals("Leasing", StringComparison.InvariantCultureIgnoreCase)) { panelLeasing.Visible = li.Selected; }
+                if (li.Value.Equals("ΔΙΑΧΕΙΡΙΣΗ ΚΩΔΙΚΑ ΔΕΟΝΤΟΛΟΓΙΑΣ")) { panelEthicsCode.Visible = li.Selected; }
+                if (li.Value.Equals("E-ΚΑΤΑΣΧΕΤΗΡΙΑ")) { panelBankAttachments.Visible = li.Selected; }
+                if (li.Value.Equals("SCAN-HRMS")) { panelSCANHRMS.Visible = li.Selected; }
+                if (li.Value.Equals("α/σ-Spring")) { panelSpring.Visible = li.Selected; }
             }
         }
 
@@ -49,22 +105,47 @@ namespace AssetMgmt
             try {
 
              
-               SPListItem itm = SPContext.Current.ListItem; 
-            string[] textFields = new string[] { "From#Από", "AM#ΑΜ",  "Name#Όνομα", "Surname#Επώνυμο", "NameLatin#Όνομα (στα Λατινικά)", "SurnameLatin#Επώνυμο (στα Λατινικά)" };
+               SPListItem itm = SPContext.Current.ListItem;
+                // only in draft status validates  
+                string _status = "";
+                if (itm.ID>0) {  _status =  (itm["_status"] ?? "").ToString(); }
+                if (!_status.Equals("") && !_status.Equals("back") && !_status.Equals("draft")) return true; 
+                if (_status.Trim().Equals("")) { itm["_status"] = "draft"; }
+                string[] textFields = new string[] { "From#Από", "AM#ΑΜ",  "Name#Όνομα", "Surname#Επώνυμο", "NameLatin#Όνομα (στα Λατινικά)", "SurnameLatin#Επώνυμο (στα Λατινικά)" };
             string[] ddlFields = new string[] { "Building#Κτίριο", "Subject#Θέμα" };
                 ArrayList textFieldsExtra = new ArrayList();
                 ArrayList ddlFieldsExtra = new ArrayList(); 
             
             string rs = utils.validateDataStandard( panelMain, textFields, ddlFields);
+                bool notSelected = true;
+                bool toCheckDM = false; 
                 foreach (ListItem cb in Systems.Items)
                 {
                     if (cb.Selected)
                     {
+                        notSelected = false; 
                        if ( cb.Value.Equals("T24")) {  textFieldsExtra.Add("T24Profile#T24 - Στοιχεία Profile Νέου Χρήστη"); }
                       //  if (cb.Value.Equals("U/SWITCHWARE")) { textFieldsExtra.Add("OSRole#U/SWITCHWARE- Κωδικός Ρόλου"); textFieldsExtra.Add("OSDep#U/SWITCHWARE- Κωδικός Διεύθυνσης"); }
                         if (cb.Value.Equals("ORACLE")) { ddlFieldsExtra.Add("OracleAccess#Για Oracle");}
                         if (cb.Value.Equals("AROTRON")) { textFieldsExtra.Add("ArotronRole#AROTRON - Ρόλος στην Ομάδα"); textFieldsExtra.Add("ArotronGroup#AROTRON - Ομάδα Εργασίας"); }
+                        if (cb.Value.Equals("MOTIVIAN")) { ddlFieldsExtra.Add("MOTIVIANAccess#MOTIVIAN"); }
+                        if (cb.Value.Equals("FACTORING")) { ddlFieldsExtra.Add("FACTORINGAccess#FACTORING"); }
+                        if (cb.Value.Equals("NEWTON")) { ddlFieldsExtra.Add("NEWTONAccess#NEWTON"); }
+                        if (cb.Value.Equals("ΕΙΣΑΓΩΓΕΣ-ΕΞΑΓΩΓΕΣ")) { ddlFieldsExtra.Add("ImportExportAccess#ΕΙΣΑΓΩΓΕΣ-ΕΞΑΓΩΓΕΣ"); }
+                        if (cb.Value.Equals("SWIFT")) { ddlFieldsExtra.Add("SWIFTAccess#SWIFT"); }
+                        if (cb.Value.Equals("ΕΚΤΙΜΗΣΕΙΣ")) { ddlFieldsExtra.Add("AssesmentsAccess#ΕΚΤΙΜΉΣΕΙΣ"); }
+                        if (cb.Value.Equals("FCM AML")) { ddlFieldsExtra.Add("FCMAMLAccess#FCM AML"); }
+                       // if (cb.Value.Equals("Document Management")) { toCheckDM = true;   }
+                        if (cb.Value.Equals("Leasing")) { ddlFieldsExtra.Add("LeasingAccess#Leasing"); }
+                        if (cb.Value.Equals("ΔΙΑΧΕΙΡΙΣΗ ΚΩΔΙΚΑ ΔΕΟΝΤΟΛΟΓΙΑΣ")) { ddlFieldsExtra.Add("EthicsCodeAccess#ΔΙΑΧΕΙΡΙΣΗ ΚΩΔΙΚΑ ΔΕΟΝΤΟΛΟΓΙΑΣ"); }
+                        if (cb.Value.Equals("E-ΚΑΤΑΣΧΕΤΗΡΙΑ")) { ddlFieldsExtra.Add("BankAttachmentsAccess#E-ΚΑΤΑΣΧΕΤΗΡΙΑ"); }
+                        if (cb.Value.Equals("SCAN-HRMS")) { ddlFieldsExtra.Add("SCANHRMSAccess#SCAN-HRMS"); }
+                        if (cb.Value.Equals("α/σ-Spring")) { ddlFieldsExtra.Add("SpringAccess#α/σ-Spring"); }
                     }
+                }
+                if (notSelected && SubjectOther.Text.Trim().Equals(""))
+                {
+                    rs += "<li> Τουλάχιστον ένα Σύστημα πρέπει να επιλεχθεί από τις δύο λίστες ή να συμπληρωθεί στο πεδίο 'Άλλα Συστήματα Εκτός Λίστας' </li>"; 
                 }
                 rs += utils.validateDataStandard( panelMain, (string []) textFieldsExtra.ToArray(typeof(string)), (string []) ddlFieldsExtra.ToArray(typeof(string)));
                 rs += utils.validateDataApprover(itm, panelMain); 
@@ -72,6 +153,17 @@ namespace AssetMgmt
                 {
                     rs += "<li> Δεν είναι έγκυρη η ημερομηνία στην Λήξη Πρακτικής</li>"; 
                 }
+                //if (toCheckDM)
+                //{
+                 
+                //    string dmSelected = DM_BOA.SelectedValue + DM_BOA_AITISEIS.SelectedValue + DM_BOA_HR_LIB.SelectedValue + DM_BOA_LEGAL_LIB.SelectedValue + DM_BOA_ML_LIB.SelectedValue;
+                //    dmSelected += DM_DANEIA.SelectedValue + DM_IMPEX.SelectedValue + DM_LMD_Customers.SelectedValue + DM_XORHGHSEIS.SelectedValue;
+                //    //rs += "<li> ---" + dmSelected + "</li>";
+                //    if (dmSelected.Trim().Equals(""))
+                //    {
+                //        rs += "<li> Έχετε δηλώσει πρόσβαση στο Document Management. Πρέπει να επιλέξετε επίπεδο πρόσβασης που επιθυμείτε σε τουλάχιστον μία βιβλιοθήκη</li>";
+                //    }
+                //}
                 if (!rs.Equals(""))
                 {
                     rs = "<ul>" + rs + "</ul>";
@@ -149,12 +241,20 @@ namespace AssetMgmt
         {
             try
             {
-                L_Errors.Text = "";
-                if (validateData())
+
+                AssetMgmtUtils utils = new AssetMgmtUtils();
+                SPListItem itm = SPContext.Current.ListItem;
+                if (!utils.isSubmitted(itm))
                 {
-                  
-                    SPListItem itm = SPContext.Current.ListItem;
-                    saveToBack(itm);
+
+                    if (validateData())
+                    {
+                        saveToBack(itm);
+                        utils.BSubmit_ClickStandard(itm, panelMain, Page);
+                    }
+                }
+                else
+                {
                     utils.BSubmit_ClickStandard(itm, panelMain, Page);
                 }
             }
@@ -167,7 +267,7 @@ namespace AssetMgmt
             {
                
                 SPListItem itm = SPContext.Current.ListItem;
-                saveToBack(itm);
+                //  saveToBack(itm);  in new version , no data to save 
                 utils.BBack_ClickStandard(itm, panelMain, Page);
 
             }
@@ -180,7 +280,7 @@ namespace AssetMgmt
             {
                 AssetMgmtUtils utils = new AssetMgmtUtils();
                 SPListItem itm = SPContext.Current.ListItem;
-                saveToBack(itm);
+              //  saveToBack(itm); in new version , no data to save 
                 utils.BReject_ClickStandard(itm, panelMain, Page);
 
             }
@@ -220,8 +320,32 @@ namespace AssetMgmt
                 itm["OracleAccess"] = OracleAccess.SelectedValue;
                 itm["ArotronRole"] = ArotronRole.Text;
                 itm["ArotronGroup"] = ArotronGroup.Text;
-                itm["Systems"] = utils.serializeCheckbox(Systems); 
-                itm.SystemUpdate(); 
+                itm["Systems"] = utils.serializeCheckbox(Systems);
+
+                itm["MOTIVIANAccess"] = MOTIVIANAccess.SelectedValue;
+                itm["FACTORINGAccess"] = FACTORINGAccess.SelectedValue;
+                itm["NEWTONAccess"] = NEWTONAccess.SelectedValue;
+                itm["ImportExportAccess"] = ImportExportAccess.SelectedValue;
+                itm["SWIFTAccess"] = SWIFTAccess.SelectedValue;
+                itm["AssesmentsAccess"] = AssesmentsAccess.SelectedValue;
+                itm["FCMAMLAccess"] = FCMAMLAccess.SelectedValue;
+                itm["LeasingAccess"] = LeasingAccess.SelectedValue;
+                itm["EthicsCodeAccess"] = EthicsCodeAccess.SelectedValue;
+                itm["BankAttachmentsAccess"] = BankAttachmentsAccess.SelectedValue;
+                itm["SCANHRMSAccess"] = SCANHRMSAccess.SelectedValue;
+                itm["SpringAccess"] = SpringAccess.SelectedValue;
+                //itm["DM_LMD_Customers"] = DM_LMD_Customers.SelectedValue;
+                //itm["DM_IMPEX"] = DM_IMPEX.SelectedValue;
+                //itm["DM_DANEIA"] = DM_DANEIA.SelectedValue;
+                //itm["DM_BOA_AITISEIS"] = DM_BOA_AITISEIS.SelectedValue;
+                //itm["DM_BOA"] = DM_BOA.SelectedValue;
+                //itm["DM_BOA_ML_LIB"] = DM_BOA_ML_LIB.SelectedValue;
+                //itm["DM_BOA_HR_LIB"] = DM_BOA_HR_LIB.SelectedValue;
+                //itm["DM_BOA_LEGAL_LIB"] = DM_BOA_LEGAL_LIB.SelectedValue;
+                //itm["DM_XORHGHSEIS"] = DM_XORHGHSEIS.SelectedValue;
+                //itm["DM_Branch"] = DM_Branch.Text; 
+
+                //  itm.SystemUpdate(); In this verion , Only ONE Update 
             }
             catch (Exception e) { L_Error.Text += " --getFromBack:" + e.Message; }
 
@@ -234,14 +358,12 @@ namespace AssetMgmt
             try
             {   
                 AssetMgmtUtils utils = new AssetMgmt.AssetMgmtUtils();
-                
                 utils.getFromBackStandard(itm, panelMain);
                 //fields & labels
   From.Text = (itm["From"] ?? "").ToString();
                 L_From.Text = (itm["From"] ?? "").ToString();
                 Building.SelectedValue = (itm["Building"] ?? "").ToString();
                 L_Building.Text = (itm["Building"] ?? "").ToString();
-
                 Subject.SelectedValue = (itm["Subject"] ?? "").ToString();
                 L_Subject.Text  = (itm["Subject"] ?? "").ToString();
                 SubjectOther.Text = (itm["SubjectOther"] ?? "").ToString();
@@ -252,6 +374,7 @@ namespace AssetMgmt
                 AM.Text = (itm["AM"] ?? "").ToString();
                 L_AM.Text = (itm["AM"] ?? "").ToString();
                 utils.deserializeCheckbox(itm, "Systems", Systems);
+               
                 Phone.Text = (itm["Phone"] ?? "").ToString();
                 L_Phone.Text = (itm["Phone"] ?? "").ToString();
                 Name.Text = (itm["Name"] ?? "").ToString();
@@ -273,8 +396,7 @@ namespace AssetMgmt
                 SurnameLatin.Text = (itm["SurnameLatin"] ?? "").ToString();
                 L_SurnameLatin.Text = (itm["SurnameLatin"] ?? "").ToString();
                 utils.deserializeCheckbox(itm, "BasicAccess", BasicAccess);
-               
-
+              
                 T24TellerID.Text = (itm["T24TellerID"] ?? "").ToString();
                 L_T24TellerID.Text = (itm["T24TellerID"] ?? "").ToString();
                 T24Profile.Text = (itm["T24Profile"] ?? "").ToString();
@@ -289,6 +411,56 @@ namespace AssetMgmt
                 L_ArotronRole.Text = (itm["ArotronRole"] ?? "").ToString();
                 ArotronGroup.Text = (itm["ArotronGroup"] ?? "").ToString();
                 L_ArotronGroup.Text = (itm["ArotronGroup"] ?? "").ToString();
+
+                L_MOTIVIANAccess.Text = (itm["MOTIVIANAccess"] ?? "").ToString();
+                MOTIVIANAccess.SelectedValue = (itm["MOTIVIANAccess"] ?? "").ToString();
+                L_FACTORINGAccess.Text = (itm["FACTORINGAccess"] ?? "").ToString();
+                FACTORINGAccess.SelectedValue = (itm["FACTORINGAccess"] ?? "").ToString();
+                L_NEWTONAccess.Text = (itm["NEWTONAccess"] ?? "").ToString();
+                NEWTONAccess.SelectedValue= (itm["NEWTONAccess"] ?? "").ToString();
+                L_ImportExportAccess.Text = (itm["ImportExportAccess"] ?? "").ToString();
+                ImportExportAccess.SelectedValue = (itm["ImportExportAccess"] ?? "").ToString();
+
+                L_SWIFTAccess.Text = (itm["SWIFTAccess"] ?? "").ToString();
+                SWIFTAccess.SelectedValue = (itm["SWIFTAccess"] ?? "").ToString();
+                AssesmentsAccess.SelectedValue = (itm["AssesmentsAccess"] ?? "").ToString();
+                L_AssesmentsAccess.Text = (itm["AssesmentsAccess"] ?? "").ToString();
+                FCMAMLAccess.SelectedValue = (itm["FCMAMLAccess"] ?? "").ToString();
+                L_FCMAMLAccess.Text = (itm["FCMAMLAccess"] ?? "").ToString();
+                SCANHRMSAccess.SelectedValue = (itm["SCANHRMSAccess"] ?? "").ToString();
+                L_SCANHRMSAccess.Text = (itm["SCANHRMSAccess"] ?? "").ToString();
+                SpringAccess.SelectedValue = (itm["SpringAccess"] ?? "").ToString();
+                L_SpringAccess.Text = (itm["SpringAccess"] ?? "").ToString();
+
+                //L_DM_LMD_Customers.Text = (itm["DM_LMD_Customers"] ?? "").ToString();
+                //L_DM_IMPEX.Text = (itm["DM_IMPEX"] ?? "").ToString();
+                //L_DM_DANEIA.Text = (itm["DM_DANEIA"] ?? "").ToString();
+                //L_DM_BOA_AITISEIS.Text = (itm["DM_BOA_AITISEIS"] ?? "").ToString();
+                //L_DM_BOA.Text = (itm["DM_BOA"] ?? "").ToString();
+                //L_DM_BOA_ML_LIB.Text = (itm["DM_BOA_ML_LIB"] ?? "").ToString();
+                //L_DM_BOA_HR_LIB.Text = (itm["DM_BOA_HR_LIB"] ?? "").ToString();
+                //L_DM_BOA_LEGAL_LIB.Text = (itm["DM_BOA_LEGAL_LIB"] ?? "").ToString();
+                //L_DM_XORHGHSEIS.Text = (itm["DM_XORHGHSEIS"] ?? "").ToString();
+                //L_DM_Branch.Text = (itm["DM_Branch"] ?? "").ToString();
+                //L_DM_LMD_Customers.Text = (itm["DM_LMD_Customers"] ?? "").ToString();
+
+                //DM_LMD_Customers.SelectedValue = (itm["DM_LMD_Customers"] ?? "").ToString();
+                //DM_IMPEX.SelectedValue = (itm["DM_IMPEX"] ?? "").ToString();
+                //DM_DANEIA.SelectedValue = (itm["DM_DANEIA"] ?? "").ToString();
+                //DM_BOA_AITISEIS.SelectedValue = (itm["DM_BOA_AITISEIS"] ?? "").ToString();
+                //DM_BOA.SelectedValue = (itm["DM_BOA"] ?? "").ToString();
+                //DM_BOA_ML_LIB.SelectedValue = (itm["DM_BOA_ML_LIB"] ?? "").ToString();
+                //DM_BOA_HR_LIB.SelectedValue = (itm["DM_BOA_HR_LIB"] ?? "").ToString();
+                //DM_BOA_LEGAL_LIB.SelectedValue = (itm["DM_BOA_LEGAL_LIB"] ?? "").ToString();
+                //DM_XORHGHSEIS.SelectedValue = (itm["DM_XORHGHSEIS"] ?? "").ToString();
+                //DM_Branch.Text = (itm["DM_Branch"] ?? "").ToString();
+
+                LeasingAccess.SelectedValue = (itm["LeasingAccess"] ?? "").ToString();
+                L_LeasingAccess.Text = (itm["LeasingAccess"] ?? "").ToString();
+                EthicsCodeAccess.SelectedValue = (itm["EthicsCodeAccess"] ?? "").ToString();
+                L_EthicsCodeAccess.Text = (itm["EthicsCodeAccess"] ?? "").ToString();
+                L_BankAttachmentsAccess.Text = (itm["BankAttachmentsAccess"] ?? "").ToString();
+                BankAttachmentsAccess.SelectedValue = (itm["BankAttachmentsAccess"] ?? "").ToString();
             }
             catch (Exception e) { L_Error.Text += " --getFromBack:" +   e.Message;  }
         }
@@ -296,9 +468,10 @@ namespace AssetMgmt
 
         private void showEditBody (bool showEdit)
         {
-From.Visible = showEdit;
+            From.Visible = showEdit;
             L_From.Visible = !showEdit;
-            Building.Visible = showEdit;
+              Building.Visible = showEdit;
+            
             L_Building.Visible = !showEdit;
             Subject.Visible = showEdit;
             L_Subject.Visible = !showEdit;
@@ -337,20 +510,55 @@ From.Visible = showEdit;
             L_ArotronGroup.Visible = !showEdit;
             OracleAccess.Visible = showEdit;
             L_OracleAccess.Visible = !showEdit;
+            MOTIVIANAccess.Visible = showEdit;
+            FACTORINGAccess.Visible = showEdit;
+            NEWTONAccess.Visible = showEdit;
+            ImportExportAccess.Visible = showEdit;
+            SWIFTAccess.Visible = showEdit;
+            AssesmentsAccess.Visible = showEdit;
+            FCMAMLAccess.Visible = showEdit;
+            BankAttachmentsAccess.Visible = showEdit;
+            SCANHRMSAccess.Visible = showEdit;
+            SpringAccess.Visible = showEdit; 
+
+            LeasingAccess.Visible = showEdit;
+            EthicsCodeAccess.Visible = showEdit;
+            L_MOTIVIANAccess.Visible = !showEdit;
+            L_FACTORINGAccess.Visible = !showEdit;
+            L_NEWTONAccess.Visible = !showEdit;
+            L_ImportExportAccess.Visible = !showEdit;
+            L_SWIFTAccess.Visible = !showEdit;
+            L_AssesmentsAccess.Visible = !showEdit;
+            L_FCMAMLAccess.Visible = !showEdit;
+          
+            L_LeasingAccess.Visible = !showEdit;
+            L_EthicsCodeAccess.Visible = !showEdit;
+            L_BankAttachmentsAccess.Visible = !showEdit;
+            L_SCANHRMSAccess.Visible = !showEdit;
+            L_SpringAccess.Visible = !showEdit; 
+            //DM_LMD_Customers.Visible = showEdit;
+            //DM_IMPEX.Visible = showEdit;
+            //DM_DANEIA.Visible = showEdit;
+            //DM_BOA_AITISEIS.Visible = showEdit;
+            //DM_BOA.Visible = showEdit;
+            //DM_BOA_ML_LIB.Visible = showEdit;
+            //DM_BOA_HR_LIB.Visible = showEdit;
+            //DM_BOA_LEGAL_LIB.Visible = showEdit;
+            //DM_XORHGHSEIS.Visible = showEdit;
+            //DM_Branch.Visible = showEdit;
+            //L_DM_LMD_Customers.Visible = !showEdit;
+            //L_DM_IMPEX.Visible = !showEdit;
+            //L_DM_DANEIA.Visible = !showEdit;
+            //L_DM_BOA_AITISEIS.Visible = !showEdit;
+            //L_DM_BOA.Visible = !showEdit;
+            //L_DM_BOA_ML_LIB.Visible = !showEdit;
+            //L_DM_BOA_HR_LIB.Visible = !showEdit;
+            //L_DM_BOA_LEGAL_LIB.Visible = !showEdit;
+            //L_DM_XORHGHSEIS.Visible = !showEdit;
+            //L_DM_Branch.Visible = !showEdit;
+
         }
 
-
-        //private string myBasicAccessDisplay(SPListItem itm)
-        //{
-        //  string rs =   (itm["BasicAccess"] ?? "").ToString().Replace(";#", ", ");
-        //    if (rs.StartsWith(",")) { rs = rs.Substring(1); }
-        //    rs = rs.Replace("Internet", "Internet");
-        //    rs = rs.Replace("Mail", "Ηλ. Ταχυδρομείο");
-        //    rs = rs.Replace("PersonalFolder", "H: Προσωπικός Χώρος στον Server");
-        //    rs = rs.Replace("DeptFolder", "K: Δικτυακός χώρος ανταλλαγής αρχείων μεταξύ Διευθύνεσων μόνο");
-        //    rs = rs.Replace("CommonFolderSTMTS30062002", "Πρόσβαση στο Common Folder 'Deposit Accounts through STMTS 30062002(\\atticaserver)");
-        //    return rs; 
-        //}
 
     }
 }

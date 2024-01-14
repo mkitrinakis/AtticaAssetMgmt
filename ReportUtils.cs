@@ -36,23 +36,23 @@ namespace AssetMgmt
         //}
         //public Hashtable MailsByAllUsers; // hashed on mail 
 
-        public class FoldersByUser
-        {
-            public string UserName;
-            public List<string> folders = new List<string>();
+        //public class FoldersByUser
+        //{
+        //    public string UserName;
+        //    public List<string> folders = new List<string>();
 
-            public void addMail(string mail)
-            {
-                folders.Add(mail);
-            }
+        //    public void addMail(string mail)
+        //    {
+        //        folders.Add(mail);
+        //    }
 
-            public void removeMail(string folder)
-            {
-                if (folders.Contains(folder)) folders.Remove(folder);
-            }
-        }
+        //    public void removeMail(string folder)
+        //    {
+        //        if (folders.Contains(folder)) folders.Remove(folder);
+        //    }
+        //}
 
-        public Hashtable FoldersByAllUsers; // hashed on folder 
+        //public Hashtable FoldersByAllUsers; // hashed on folder 
 
 
         public int getFirstID(SPList l, bool Ascending)
@@ -71,47 +71,19 @@ namespace AssetMgmt
         }
 
 
-        /// <summary>
-        /// MAILS REPORTS 
-        /// </summary>
-        public SPListItem getLastItemByEMailAccount(SPList l, string emailAccount)
-        {
-            try
-            {
-                Guid webID = l.ParentWeb.ID;
-                Guid listID = l.ID;
-                Guid siteID = l.ParentWeb.Site.ID;
-                SPListItem itm = null;
-                SPSecurity.RunWithElevatedPrivileges(delegate ()
-                {
-                    using (SPSite siteElevated = new SPSite(siteID))
-                    {
-                        using (SPWeb webElevated = siteElevated.OpenWeb(webID))
-                        {
-                            SPList listElevated = webElevated.Lists[listID];
-                            SPQuery qry = new SPQuery();
-                            string sqry = "<Eq> <FieldRef Name='_status'/><Value Type='Text'>closed</Value> </Eq>";
-                            sqry = "<And>" + "<Eq> <FieldRef Name='EMailAddress'/><Value Type='Text'>" + emailAccount + "</Value> </Eq>" + sqry + "</And>";
-                            sqry = "<Where>" + sqry + "</Where>";
-                            sqry += "<OrderBy> <FieldRef Name='Implemented' Ascending='FALSE'/></OrderBy>";
-                           
-                            qry.Query = sqry;
-                            // qry.ViewFields = "<FieldRef Name='Implemented'/><FieldRef Name='Title'/><FieldRef Name='Serial'/><FieldRef Name='Implemented'/>";
+      
+     
 
-                            SPListItemCollection col = listElevated.GetItems(qry);
-                            if (col.Count > 0) { itm = col[0]; };
-                        }
-                    }
-                });
-                return itm;
-            }
-            catch (Exception e) { Error += "getLastItemByEMailAccount -->" + e.Message; return null; }
+        struct LastItem
+        {
+            public int id;
+            public DateTime implemented;
         }
 
 
-        /// <summary>
-        /// FOLDER REPORTS 
-        /// </summary>
+
+        #region Folders
+
         public SPListItem getLastItemByFolder(SPList l, string folder)
         {
             try
@@ -145,17 +117,130 @@ namespace AssetMgmt
             }
             catch (Exception e) { Error += "getLastItemByFolder -->" + e.Message; return null; }
         }
+     
 
-
-
-
-
-        struct LastItem
+        public Hashtable FoldersByUsers(SPList l)
         {
-            public int id;
-            public DateTime implemented;
+            Hashtable rs = new Hashtable(); // <user as string>   string[1], [0] is SendAs1#SendAs2... , [1] is ForwardTo1#ForwardTo2 ... 
+            Hashtable htLastItems = LastItemByFolder(l);
+            foreach (string key in htLastItems.Keys)
+            {
+                try
+                {
+                    int id = ((LastItem)htLastItems[key]).id;
+                    SPListItem itm = l.GetItemById(id);
+                    string folder = (itm["Folder"] ?? "").ToString();
+                    string rightsV2 = (itm["RightsV2"] ?? "").ToString();
+                    
+                    foreach (string right in rightsV2.Split(new string[] { "##" }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        string[] creds = right.Split(new string[] { "^^" }, StringSplitOptions.None);
+                        string user = creds[0];
+                        string access = creds[2]; 
+                        if (rs.ContainsKey(user))
+                        {
+                            rs[user] = folder + " (ως " +  access   + ")#" + rs[user];
+                        }
+                        else { rs[user] = "#" + folder + " (ως " + access + ")#"; }
+                    }
+                }
+                catch (Exception e) { log("FoldersByUsers:" + e.Message, true); }
+            }
+            return rs;
         }
 
+        public Hashtable UsersByFolders(SPList l)
+        {
+            Hashtable rs = new Hashtable(); // <email as string>   SendAs1#SendAs2...SendAsn$ForwardTo1 ... 
+            Hashtable htLastItems = LastItemByFolder(l);
+
+            foreach (string key in htLastItems.Keys)
+            {
+                try
+                {
+                    LastItem lastItem = (LastItem)htLastItems[key];
+                    SPListItem itm = l.GetItemById(lastItem.id);
+                    string details = (itm["RightsV2"] ?? "").ToString().Replace("##", "<br>").Replace("^^", " - "); 
+                   
+                    rs[key] = details;
+                }
+                catch (Exception e) { log("UsersByFolders:" + e.Message, true); }
+            }
+            return rs;
+        }
+
+        private Hashtable LastItemByFolder(SPList l) // returns 
+        {
+            Hashtable lastRequests = new Hashtable();  // <email as string> LastIte    
+            int firstID = getFirstID(l, true);
+            int lastID = getFirstID(l, false);
+            //take a hashtable with all last mails by folder account ; 
+            for (int i = firstID; i <= lastID; i++)
+            {
+                try
+                {
+                    SPListItem itm = l.GetItemById(i);
+                    string _status = (itm["_status"] ?? "").ToString();
+                    string folder = (itm["Folder"] ?? "").ToString().Trim().ToUpper();
+                    if (_status.Equals("closed") && !folder.Trim().Equals("") && !(itm["Implemented"] ?? "").ToString().Equals(""))
+                    {
+                        if (!lastRequests.ContainsKey(folder))
+                        {
+                            try { lastRequests[folder] = new LastItem() { id = itm.ID, implemented = (DateTime)itm["Implemented"] }; } catch { };
+                        }
+                        else
+                        {
+                            try
+                            {
+                                LastItem lastItem = (LastItem)lastRequests[folder];
+                                if (DateTime.Compare(lastItem.implemented, (DateTime)itm["Implemented"]) < 0) { lastRequests[folder] = new LastItem() { id = itm.ID, implemented = (DateTime)itm["Implemented"] }; }
+
+                            }
+                            catch { };
+                        }
+                    }
+                }
+                catch { };
+            }
+            return lastRequests;
+        }
+
+        #endregion
+
+        #region EMails 
+        public SPListItem getLastItemByEMailAccount(SPList l, string emailAccount)
+        {
+            try
+            {
+                Guid webID = l.ParentWeb.ID;
+                Guid listID = l.ID;
+                Guid siteID = l.ParentWeb.Site.ID;
+                SPListItem itm = null;
+                SPSecurity.RunWithElevatedPrivileges(delegate ()
+                {
+                    using (SPSite siteElevated = new SPSite(siteID))
+                    {
+                        using (SPWeb webElevated = siteElevated.OpenWeb(webID))
+                        {
+                            SPList listElevated = webElevated.Lists[listID];
+                            SPQuery qry = new SPQuery();
+                            string sqry = "<Eq> <FieldRef Name='_status'/><Value Type='Text'>closed</Value> </Eq>";
+                            sqry = "<And>" + "<Eq> <FieldRef Name='EMailAddress'/><Value Type='Text'>" + emailAccount + "</Value> </Eq>" + sqry + "</And>";
+                            sqry = "<Where>" + sqry + "</Where>";
+                            sqry += "<OrderBy> <FieldRef Name='Implemented' Ascending='FALSE'/></OrderBy>";
+
+                            qry.Query = sqry;
+                            // qry.ViewFields = "<FieldRef Name='Implemented'/><FieldRef Name='Title'/><FieldRef Name='Serial'/><FieldRef Name='Implemented'/>";
+
+                            SPListItemCollection col = listElevated.GetItems(qry);
+                            if (col.Count > 0) { itm = col[0]; };
+                        }
+                    }
+                });
+                return itm;
+            }
+            catch (Exception e) { Error += "getLastItemByEMailAccount -->" + e.Message; return null; }
+        }
 
         public Hashtable EMailAccountsByUsers(SPList l)
         {
@@ -176,7 +261,7 @@ namespace AssetMgmt
                         {
                             rs[sendAs] = emailAddress + "#" + rs[sendAs];
                         }
-                        else { rs[sendAs] = emailAddress + "$"; }
+                        else { rs[sendAs] = "#" + emailAddress + "#"; }
                     }
                     foreach (string forwardTo in forwardToAll.Split(new char[] { '#' }, StringSplitOptions.RemoveEmptyEntries))
                     {
@@ -236,8 +321,8 @@ namespace AssetMgmt
                             try
                             {
                                 LastItem lastItem = (LastItem)lastRequests[emailAddress];
-                                if (DateTime.Compare (lastItem.implemented, (DateTime)itm["Implemented"])<0) { lastRequests[emailAddress] = new LastItem() { id = itm.ID, implemented = (DateTime)itm["Implemented"] }; }
-                                
+                                if (DateTime.Compare(lastItem.implemented, (DateTime)itm["Implemented"]) < 0) { lastRequests[emailAddress] = new LastItem() { id = itm.ID, implemented = (DateTime)itm["Implemented"] }; }
+
                             }
                             catch { };
                         }
@@ -247,6 +332,8 @@ namespace AssetMgmt
             }
             return lastRequests;
         }
+
+        #endregion
     }
 
 
