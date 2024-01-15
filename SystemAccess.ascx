@@ -81,19 +81,26 @@
          <asp:ListItem>WINDOWS</asp:ListItem>
         
         <asp:ListItem>AROTRON</asp:ListItem>
-        <asp:ListItem>U/SWITCHWARE</asp:ListItem>
+        <asp:ListItem>G4</asp:ListItem>
+        <asp:ListItem>3D Secure</asp:ListItem>
+         <asp:ListItem>Document Management</asp:ListItem>
          <asp:ListItem>ORACLE</asp:ListItem>
           <asp:ListItem>OMNIA Ebanking</asp:ListItem>  
           <asp:ListItem>NEWTON</asp:ListItem>
-          <asp:ListItem>ΕΙΣΑΓΩΓΕΣ-ΕΞΑΓΩΓΕΣ</asp:ListItem>   
+  	<asp:ListItem>Αμοιβαία Κεφάλαια NEWTON</asp:ListItem>
+  	<asp:ListItem>Demat (Μετοχολόγιο)</asp:ListItem>
+          <asp:ListItem Value="ΕΙΣΑΓΩΓΕΣ-ΕΞΑΓΩΓΕΣ" Text="ΕΙΣΑΓΩΓΕΣ-ΕΞΑΓΩΓΕΣ (MCI)"></asp:ListItem>   
           <asp:ListItem>SWIFT</asp:ListItem>
+         <asp:ListItem>SWIFT ALLIANCE</asp:ListItem>
           <asp:ListItem>ΕΚΤΙΜΗΣΕΙΣ</asp:ListItem>
           <asp:ListItem>FCM AML</asp:ListItem>
+         <asp:ListItem>SAS AML</asp:ListItem>
+         <asp:ListItem>RegTek AML</asp:ListItem>
           <asp:ListItem>MOTIVIAN</asp:ListItem>     
          <asp:ListItem>Leasing</asp:ListItem>     
          <asp:ListItem>FACTORING</asp:ListItem>     
          <asp:ListItem>UTS FIRST DATA</asp:ListItem>     
-         <asp:ListItem>ΔΙΑΧΕΙΡΙΣΗ ΚΩΔΙΚΑ ΔΕΟΝΤΟΛΟΓΙΑΣ</asp:ListItem>
+         <asp:ListItem Value="ΔΙΑΧΕΙΡΙΣΗ ΚΩΔΙΚΑ ΔΕΟΝΤΟΛΟΓΙΑΣ" Text="ΔΙΑΧΕΙΡΙΣΗ ΚΩΔΙΚΑ ΔΕΟΝΤΟΛΟΓΙΑΣ (MITOS)"></asp:ListItem>
          <asp:ListItem>E-ΚΑΤΑΣΧΕΤΗΡΙΑ</asp:ListItem>
          <asp:ListItem>BUSINESS OBJECT</asp:ListItem>
          <asp:ListItem>ΑΚΙΝΗΤΑ THESIS.NET</asp:ListItem>
@@ -101,6 +108,8 @@
          <asp:ListItem>SCAN-HRMS</asp:ListItem>     
          <asp:ListItem>ΣΜΠΚ</asp:ListItem>   
          <asp:ListItem>α/σ-Spring</asp:ListItem>     
+         <asp:ListItem>QUANTUM-FIS</asp:ListItem>     
+         <asp:ListItem>Code</asp:ListItem>     
     </asp:CheckBoxList>
 
       <br />
@@ -268,7 +277,20 @@
         <td class="col2value"> <asp:TextBox ID="ArotronGroup" runat="server"></asp:TextBox><asp:Label ID="L_ArotronGroup" runat="server" Text=""></asp:Label></td></tr>
 </table>
           </asp:Panel>
-      <asp:Panel ID="panelDocumentManagement" runat="server" >             
+
+
+        <asp:Panel ID="panelDocumentManagement" runat="server" > 
+          <p>&nbsp;</p>
+<table><tr><th colspan="2">Document Management</th></tr>
+    <tr><td class="col2label required">* Πρόσβαση σε Βιβλιοθήκη</td>
+        <td class="col2value"> <asp:DropDownList ID="DocumentManagementLibrary" runat="server"></asp:DropDownList>
+        <asp:Label ID="L_DocumentManagementLibrary" runat="server" Text=""></asp:Label>        
+        </td></tr>
+    
+</table>
+          </asp:Panel>
+
+    <%--  <asp:Panel ID="panelDocumentManagement" runat="server" >             
           <p>&nbsp;</p>
 <table>
 <tr><th colspan="4">Για Document Management</th></tr>  
@@ -295,7 +317,7 @@
     <td class="col4value"> <asp:TextBox ID="DM_Branch" runat="server"></asp:TextBox><asp:Label ID="L_DM_Branch" runat="server" Text=""></asp:Label></td></tr>
   
   </table>
-          </asp:Panel>  
+          </asp:Panel>  --%>
 
     <asp:Panel ID="panelOracle" runat="server" >   
           <p>&nbsp;</p>
@@ -349,6 +371,22 @@
   </table>
           </asp:Panel>
 
+     <asp:Panel ID="panelSASAML" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">SAS AML (Δικαιώματα) </td><td><asp:DropDownList ID="SASAMLAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_SASAMLAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+      <asp:Panel ID="panelRegTekAML" runat="server" >   
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">Reg Tek (Δικαιώματα) </td><td><asp:DropDownList ID="RegTekAMLAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_RegTekAMLAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
         <asp:Panel ID="panelMOTIVIAN" runat="server" > 
           <p>&nbsp;</p>
 <table>
@@ -391,7 +429,7 @@
   </table>  
           </asp:Panel>
 
-     <asp:Panel ID="panelSCANHRMS" runat="server" > 
+     <asp:Panel ID="panelSCANHRMS" runat="server" >   
           <p>&nbsp;</p>
 <table>
     <tr><td class="col2label required">SCAN-HRMS (Δικαιώματα)</td><td><asp:DropDownList ID="SCANHRMSAccess" runat="server" ></asp:DropDownList>
@@ -405,6 +443,15 @@
     <asp:Label ID="L_SpringAccess" runat="server" Text=""></asp:Label></td></tr>
   </table>
           </asp:Panel>
+    <asp:Panel ID="panelCode" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required"> Code (Δικαιώματα)</td><td><asp:DropDownList ID="CodeAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_CodeAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+
     </ContentTemplate>
 </asp:UpdatePanel>    
 <p>
