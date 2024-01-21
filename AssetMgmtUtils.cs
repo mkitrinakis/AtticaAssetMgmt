@@ -16,7 +16,7 @@ namespace AssetMgmt
     {
         public string err = "";
         public System.Drawing.Color errColor = System.Drawing.Color.LightPink;
-       
+        const string itGroupName = "HelpDesk";
         public void initStandard(Panel panelMain)
         {
             SPListItem itm = SPContext.Current.ListItem;
@@ -361,7 +361,7 @@ namespace AssetMgmt
                          
                     {
 
-                        SPGroup g = itm.Web.SiteGroups["HelpDesk"];
+                        SPGroup g = itm.Web.SiteGroups[itGroupName];
                         SPFieldUserValueCollection fuvc = new SPFieldUserValueCollection();
                         fuvc.Add(new SPFieldUserValue(itm.Web, g.ID, g.Name));
                         itm["WaitingApprover"] = fuvc;
@@ -1062,7 +1062,7 @@ namespace AssetMgmt
             {
                     if (_status.Equals("pendingImplementation"))
                     {
-                        return (itm.Web.SiteGroups["HelpDesk"].ContainsCurrentUser); 
+                        return (itm.Web.SiteGroups[itGroupName].ContainsCurrentUser); 
                     }
                    else
                     {

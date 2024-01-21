@@ -99,7 +99,7 @@
           <asp:ListItem>MOTIVIAN</asp:ListItem>     
          <asp:ListItem>Leasing</asp:ListItem>     
          <asp:ListItem>FACTORING</asp:ListItem>     
-         <asp:ListItem>UTS FIRST DATA</asp:ListItem>     
+         <asp:ListItem>CMS FIRST DATA</asp:ListItem>     
          <asp:ListItem Value="ΔΙΑΧΕΙΡΙΣΗ ΚΩΔΙΚΑ ΔΕΟΝΤΟΛΟΓΙΑΣ" Text="ΔΙΑΧΕΙΡΙΣΗ ΚΩΔΙΚΑ ΔΕΟΝΤΟΛΟΓΙΑΣ (MITOS)"></asp:ListItem>
          <asp:ListItem>E-ΚΑΤΑΣΧΕΤΗΡΙΑ</asp:ListItem>
          <asp:ListItem>BUSINESS OBJECT</asp:ListItem>
@@ -109,7 +109,12 @@
          <asp:ListItem>ΣΜΠΚ</asp:ListItem>   
          <asp:ListItem>α/σ-Spring</asp:ListItem>     
          <asp:ListItem>QUANTUM-FIS</asp:ListItem>     
-         <asp:ListItem>Code</asp:ListItem>     
+         <asp:ListItem>Code</asp:ListItem> 
+         <asp:ListItem>APIFON</asp:ListItem>     
+         <asp:ListItem>QUALCO</asp:ListItem>   
+         <asp:ListItem>CRM</asp:ListItem>     
+         <asp:ListItem>CREDIT LENS</asp:ListItem>     
+            
     </asp:CheckBoxList>
 
       <br />
