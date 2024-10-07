@@ -93,10 +93,10 @@
           <asp:ListItem>SWIFT</asp:ListItem>
          <asp:ListItem>SWIFT ALLIANCE</asp:ListItem>
           <asp:ListItem>ΕΚΤΙΜΗΣΕΙΣ</asp:ListItem>
-          <asp:ListItem>FCM AML</asp:ListItem>
+         <asp:ListItem>MOTIVIAN</asp:ListItem>     
          <asp:ListItem>SAS AML</asp:ListItem>
+         <asp:ListItem>FCM AML</asp:ListItem>
          <asp:ListItem>RegTek AML</asp:ListItem>
-          <asp:ListItem>MOTIVIAN</asp:ListItem>     
          <asp:ListItem>Leasing</asp:ListItem>     
          <asp:ListItem>FACTORING</asp:ListItem>     
          <asp:ListItem>CMS FIRST DATA</asp:ListItem>     
@@ -114,6 +114,11 @@
          <asp:ListItem>QUALCO</asp:ListItem>   
          <asp:ListItem>CRM</asp:ListItem>     
          <asp:ListItem>CREDIT LENS</asp:ListItem>     
+         <asp:ListItem>BPM DIGITAL-1</asp:ListItem>   
+         <asp:ListItem>BPM LOS SME & CORPORATE</asp:ListItem>   
+         <asp:ListItem>BPM LOS ΚΑΤΑΝΑΛΩΤΙΚΩΝ & ΚΑΡΤΩΝ</asp:ListItem>   
+         <asp:ListItem>ACS Website Application</asp:ListItem>   
+         <asp:ListItem>ACS Connect Website Application</asp:ListItem>   
             
     </asp:CheckBoxList>
 
@@ -366,7 +371,14 @@
     <asp:Label ID="L_AssesmentsAccess" runat="server" Text=""></asp:Label></td></tr>
   </table>
           </asp:Panel>
-     
+       <asp:Panel ID="panelMOTIVIAN" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    
+    <tr><td class="col2label required">MOTIVIAN (Δικαιώματα)</td></td><td><asp:DropDownList ID="MOTIVIANAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_MOTIVIANAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
 
      <asp:Panel ID="panelFCMAML" runat="server" > 
           <p>&nbsp;</p>
@@ -392,14 +404,7 @@
   </table>
           </asp:Panel>
 
-        <asp:Panel ID="panelMOTIVIAN" runat="server" > 
-          <p>&nbsp;</p>
-<table>
-    
-    <tr><td class="col2label required">MOTIVIAN (Δικαιώματα)</td></td><td><asp:DropDownList ID="MOTIVIANAccess" runat="server" ></asp:DropDownList>
-    <asp:Label ID="L_MOTIVIANAccess" runat="server" Text=""></asp:Label></td></tr>
-  </table>
-          </asp:Panel>
+      
 
     <asp:Panel ID="panelLeasing" runat="server" > 
           <p>&nbsp;</p>
@@ -456,6 +461,42 @@
   </table>
           </asp:Panel>
 
+
+       <asp:Panel ID="panelBPMDIGITAL1" runat="server" >   
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">BPM DIGITAL-1 (Δικαιώματα)</td><td><asp:DropDownList ID="BPMDIGITAL1Access" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_BPMDIGITAL1Access" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+    <asp:Panel ID="panelBPMLOSSMECorporate" runat="server" >   
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">BPM LOS SME & CORPORATE (Δικαιώματα)</td><td><asp:DropDownList ID="BPMLOSSMECorporateAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_BPMLOSSMECorporateAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+    <asp:Panel ID="panelBPMLOSConsume" runat="server" >   
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">BPM LOS ΚΑΤΑΝΑΛΩΤΙΚΩΝ & ΚΑΡΤΩΝ (Δικαιώματα)</td><td><asp:DropDownList ID="BPMLOSConsumeAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_BPMLOSConsumeAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+    <asp:Panel ID="panelACSWebsite" runat="server" >   
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">ACS Website Application (Δικαιώματα)</td><td><asp:DropDownList ID="ACSWebsiteAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_ACSWebsiteAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+    <asp:Panel ID="panelACSConnectWebsite" runat="server" >   
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">ACS Connect Website Application (Δικαιώματα)</td><td><asp:DropDownList ID="ACSConnectWebsiteAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_ACSConnectWebsiteAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
 
     </ContentTemplate>
 </asp:UpdatePanel>    

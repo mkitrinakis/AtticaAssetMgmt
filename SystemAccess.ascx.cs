@@ -45,7 +45,11 @@ namespace AssetMgmt
                 //DM_BOA_HR_LIB.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
                 //DM_BOA_LEGAL_LIB.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
                 //DM_XORHGHSEIS.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "DocumentManagementAccess"));
-
+                BPMDIGITAL1Access.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "BPMDIGITAL1Access"));
+                BPMLOSSMECorporateAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "BPMLOSSMECorporateAccess"));
+                BPMLOSConsumeAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "BPMLOSConsumeAccess"));
+                ACSWebsiteAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "ACSWebsiteAccess"));
+                ACSConnectWebsiteAccess.Items.AddRange(utils.getListItemsFromKeywordsList(itm.Web, "ACSConnectWebsiteAccess"));
                 // SPList listSystems = SPContext.Current.Web.Lists["Systems"];
                 if (itm.ID > 0)
                 {
@@ -68,6 +72,11 @@ namespace AssetMgmt
                     utils.EnsureDropDownList(itm, "SCANHRMSAccess", ref SCANHRMSAccess);
                     utils.EnsureDropDownList(itm, "SpringAccess", ref SpringAccess);
                     utils.EnsureDropDownList(itm, "CodeAccess", ref CodeAccess);
+                    utils.EnsureDropDownList(itm, "BPMDIGITAL1Access", ref BPMDIGITAL1Access);
+                    utils.EnsureDropDownList(itm, "BPMLOSSMECorporateAccess", ref BPMLOSSMECorporateAccess);
+                    utils.EnsureDropDownList(itm, "BPMLOSConsumeAccess", ref BPMLOSConsumeAccess);
+                    utils.EnsureDropDownList(itm, "ACSWebsiteAccess", ref ACSWebsiteAccess);
+                    utils.EnsureDropDownList(itm, "ACSConnectWebsiteAccess", ref ACSConnectWebsiteAccess);
                 }
 
                 if (itm.ID > 0) { getFromBack(itm); } // not a new document ; 
@@ -106,6 +115,11 @@ namespace AssetMgmt
                 if (li.Value.Equals("SCAN-HRMS")) { panelSCANHRMS.Visible = li.Selected; }
                 if (li.Value.Equals("α/σ-Spring")) { panelSpring.Visible = li.Selected; }
                 if (li.Value.Equals("Code")) { panelCode.Visible = li.Selected; }
+                if (li.Value.Equals("BPM DIGITAL-1")) { panelBPMDIGITAL1.Visible = li.Selected; }
+                if (li.Value.Equals("BPM LOS SME & CORPORATE")) { panelBPMLOSSMECorporate.Visible = li.Selected; }
+                if (li.Value.Equals("BPM LOS ΚΑΤΑΝΑΛΩΤΙΚΩΝ & ΚΑΡΤΩΝ")) { panelBPMLOSConsume.Visible = li.Selected; }
+                if (li.Value.Equals("ACS Website Application")) { panelACSWebsite.Visible = li.Selected; }
+                if (li.Value.Equals("ACS Connect Website Application")) { panelACSConnectWebsite.Visible = li.Selected; }
             }
         }
 
@@ -156,6 +170,11 @@ namespace AssetMgmt
                         if (cb.Value.Equals("SCAN-HRMS")) { ddlFieldsExtra.Add("SCANHRMSAccess#SCAN-HRMS"); }
                         if (cb.Value.Equals("α/σ-Spring")) { ddlFieldsExtra.Add("SpringAccess#α/σ-Spring"); }
                         if (cb.Value.Equals("Code")) { ddlFieldsExtra.Add("CodeAccess#Code"); }
+                        if (cb.Value.Equals("BPM DIGITAL-1")) { ddlFieldsExtra.Add("BPMDIGITAL1Access#BPM DIGITAL-1"); }
+                        if (cb.Value.Equals("BPM LOS SME & CORPORATE")) { ddlFieldsExtra.Add("BPMLOSSMECorporateAccess#BPM LOS SME & CORPORATE"); }
+                        if (cb.Value.Equals("BPM LOS ΚΑΤΑΝΑΛΩΤΙΚΩΝ & ΚΑΡΤΩΝ")) { ddlFieldsExtra.Add("BPMLOSConsumeAccess#BPM LOS ΚΑΤΑΝΑΛΩΤΙΚΩΝ & ΚΑΡΤΩΝ"); }
+                        if (cb.Value.Equals("ACS Website Application")) { ddlFieldsExtra.Add("ACSWebsiteAccess#ACS Website Application"); }
+                        if (cb.Value.Equals("ACS Connect Website Application")) { ddlFieldsExtra.Add("ACSConnectWebsiteAccess#ACS Connect Website Application"); }
                     }
                 }
                 if (notSelected && SubjectOther.Text.Trim().Equals(""))
@@ -363,7 +382,11 @@ namespace AssetMgmt
                 //itm["DM_BOA_LEGAL_LIB"] = DM_BOA_LEGAL_LIB.SelectedValue;
                 //itm["DM_XORHGHSEIS"] = DM_XORHGHSEIS.SelectedValue;
                 //itm["DM_Branch"] = DM_Branch.Text; 
-
+                itm["BPMDIGITAL1Access"] = BPMDIGITAL1Access.SelectedValue;
+                itm["BPMLOSSMECorporateAccess"] = BPMLOSSMECorporateAccess.SelectedValue;
+                itm["BPMLOSConsumeAccess"] = BPMLOSConsumeAccess.SelectedValue;
+                itm["ACSWebsiteAccess"] = ACSWebsiteAccess.SelectedValue;
+                itm["ACSConnectWebsiteAccess"] = ACSConnectWebsiteAccess.SelectedValue;
                 //  itm.SystemUpdate(); In this verion , Only ONE Update 
             }
             catch (Exception e) { L_Error.Text += " --getFromBack:" + e.Message; }
@@ -489,6 +512,17 @@ namespace AssetMgmt
                 L_EthicsCodeAccess.Text = (itm["EthicsCodeAccess"] ?? "").ToString();
                 L_BankAttachmentsAccess.Text = (itm["BankAttachmentsAccess"] ?? "").ToString();
                 BankAttachmentsAccess.SelectedValue = (itm["BankAttachmentsAccess"] ?? "").ToString();
+
+                BPMDIGITAL1Access.SelectedValue = (itm["BPMDIGITAL1Access"] ?? "").ToString();
+                L_BPMDIGITAL1Access.Text = (itm["BPMDIGITAL1Access"] ?? "").ToString();
+                BPMLOSSMECorporateAccess.SelectedValue = (itm["BPMLOSSMECorporateAccess"] ?? "").ToString();
+                L_BPMLOSSMECorporateAccess.Text = (itm["BPMLOSSMECorporateAccess"] ?? "").ToString();
+                BPMLOSConsumeAccess.SelectedValue = (itm["BPMLOSConsumeAccess"] ?? "").ToString();
+                L_BPMLOSConsumeAccess.Text = (itm["BPMLOSConsumeAccess"] ?? "").ToString();
+                ACSWebsiteAccess.SelectedValue = (itm["ACSWebsiteAccess"] ?? "").ToString();
+                L_ACSWebsiteAccess.Text = (itm["ACSWebsiteAccess"] ?? "").ToString();
+                ACSConnectWebsiteAccess.SelectedValue = (itm["ACSConnectWebsiteAccess"] ?? "").ToString();
+                L_ACSConnectWebsiteAccess.Text = (itm["ACSConnectWebsiteAccess"] ?? "").ToString();
             }
             catch (Exception e) { L_Error.Text += " --getFromBack:" + e.Message; }
         }
@@ -590,9 +624,16 @@ namespace AssetMgmt
             //L_DM_BOA_LEGAL_LIB.Visible = !showEdit;
             //L_DM_XORHGHSEIS.Visible = !showEdit;
             //L_DM_Branch.Visible = !showEdit;
-
+            BPMDIGITAL1Access.Visible = showEdit;
+            BPMLOSSMECorporateAccess.Visible = showEdit;
+            BPMLOSConsumeAccess.Visible = showEdit;
+            ACSWebsiteAccess.Visible = showEdit;
+            ACSConnectWebsiteAccess.Visible = showEdit;
+            L_BPMDIGITAL1Access.Visible = !showEdit;
+            L_BPMLOSSMECorporateAccess.Visible = !showEdit;
+            L_BPMLOSConsumeAccess.Visible = !showEdit;
+            L_ACSWebsiteAccess.Visible = !showEdit;
+            L_ACSConnectWebsiteAccess.Visible = !showEdit;
         }
-
-
     }
 }

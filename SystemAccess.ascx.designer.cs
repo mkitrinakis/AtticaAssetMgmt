@@ -66,6 +66,7 @@ namespace AssetMgmt {
         protected global::System.Web.UI.WebControls.TextBox ArotronGroup;
         protected global::System.Web.UI.WebControls.CheckBoxList Systems;
         protected global::System.Web.UI.WebControls.CheckBoxList BasicAccess;
+        
         protected global::System.Web.UI.WebControls.Literal L_BasicAccess;
         protected global::System.Web.UI.WebControls.Literal L_Comments;
 //         protected global::Telerik.Web.UI.RadDatePicker EndDate;
@@ -117,6 +118,11 @@ namespace AssetMgmt {
         protected global::System.Web.UI.WebControls.Panel panelSCANHRMS;
         protected global::System.Web.UI.WebControls.Panel panelSpring;
         protected global::System.Web.UI.WebControls.Panel panelCode;
+        protected global::System.Web.UI.WebControls.Panel panelBPMDIGITAL1;
+        protected global::System.Web.UI.WebControls.Panel panelBPMLOSSMECorporate;
+        protected global::System.Web.UI.WebControls.Panel panelBPMLOSConsume;
+        protected global::System.Web.UI.WebControls.Panel panelACSWebsite;
+        protected global::System.Web.UI.WebControls.Panel panelACSConnectWebsite;
 
 
         protected global::System.Web.UI.WebControls.DropDownList NEWTONAccess;
@@ -144,8 +150,13 @@ namespace AssetMgmt {
         protected global::System.Web.UI.WebControls.DropDownList DM_BOA_LEGAL_LIB;
         protected global::System.Web.UI.WebControls.DropDownList DM_XORHGHSEIS;
         protected global::System.Web.UI.WebControls.TextBox DM_Branch;
+        protected global::System.Web.UI.WebControls.DropDownList BPMDIGITAL1Access;
+        protected global::System.Web.UI.WebControls.DropDownList BPMLOSSMECorporateAccess;
+        protected global::System.Web.UI.WebControls.DropDownList BPMLOSConsumeAccess;
+        protected global::System.Web.UI.WebControls.DropDownList ACSWebsiteAccess;
+        protected global::System.Web.UI.WebControls.DropDownList ACSConnectWebsiteAccess;
 
-        
+
         protected global::System.Web.UI.WebControls.Label L_NEWTONAccess;
         protected global::System.Web.UI.WebControls.Label L_ImportExportAccess;
         protected global::System.Web.UI.WebControls.Label L_SWIFTAccess;
@@ -170,7 +181,12 @@ namespace AssetMgmt {
         protected global::System.Web.UI.WebControls.Label L_DM_BOA_HR_LIB;
         protected global::System.Web.UI.WebControls.Label L_DM_BOA_LEGAL_LIB;
         protected global::System.Web.UI.WebControls.Label L_DM_XORHGHSEIS;
-        protected global::System.Web.UI.WebControls.Label L_DM_Branch; 
+        protected global::System.Web.UI.WebControls.Label L_DM_Branch;
+        protected global::System.Web.UI.WebControls.Label L_BPMDIGITAL1Access;
+        protected global::System.Web.UI.WebControls.Label L_BPMLOSSMECorporateAccess;
+        protected global::System.Web.UI.WebControls.Label L_BPMLOSConsumeAccess;
+        protected global::System.Web.UI.WebControls.Label L_ACSWebsiteAccess;
+        protected global::System.Web.UI.WebControls.Label L_ACSConnectWebsiteAccess;
 
 
 
