@@ -114,7 +114,7 @@ namespace AssetMgmt
                     SPListItem kitm = col[0];
                     string[] values = (kitm["Value"] ?? "").ToString().Split(new char[] { '~' }, StringSplitOptions.RemoveEmptyEntries); 
                     List<string> sorted = new List<string>(values);
-                    sorted.Sort();
+                  //  sorted.Sort();  Δεν θέλουν sorted 
                     foreach (string el in sorted)
                     {
                         rs.Add(new ListItem(el));
