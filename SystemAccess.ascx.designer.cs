@@ -61,7 +61,10 @@ namespace AssetMgmt {
         protected global::System.Web.UI.WebControls.TextBox T24Profile;
         protected global::System.Web.UI.WebControls.TextBox OSRole;
         protected global::System.Web.UI.WebControls.TextBox OSDep;
+        protected global::System.Web.UI.WebControls.DropDownList G4Access;
+        protected global::System.Web.UI.WebControls.DropDownList _3DSecureAccess;
         protected global::System.Web.UI.WebControls.DropDownList OracleAccess;
+        protected global::System.Web.UI.WebControls.DropDownList OMNIAAccess;
         protected global::System.Web.UI.WebControls.TextBox ArotronRole;
         protected global::System.Web.UI.WebControls.TextBox ArotronGroup;
         protected global::System.Web.UI.WebControls.CheckBoxList Systems;
@@ -88,8 +91,11 @@ namespace AssetMgmt {
         protected global::System.Web.UI.WebControls.Label L_T24Profile;
         protected global::System.Web.UI.WebControls.Label L_OSRole;
         protected global::System.Web.UI.WebControls.Label L_OSDep;
+        protected global::System.Web.UI.WebControls.Label L_G4Access;
+        protected global::System.Web.UI.WebControls.Label L_3DSecureAccess;
         protected global::System.Web.UI.WebControls.Label L_DocumentManagementLibrary;
         protected global::System.Web.UI.WebControls.Label L_OracleAccess;
+        protected global::System.Web.UI.WebControls.Label L_OMNIAAccess;
         protected global::System.Web.UI.WebControls.Label L_ArotronRole;
         protected global::System.Web.UI.WebControls.Label L_ArotronGroup;
         protected global::System.Web.UI.WebControls.Label L_EndDate;
@@ -99,12 +105,16 @@ namespace AssetMgmt {
 
         protected global::System.Web.UI.WebControls.Panel panelT24;
         protected global::System.Web.UI.WebControls.Panel panelWindows;
+        protected global::System.Web.UI.WebControls.Panel panelG4;
+        protected global::System.Web.UI.WebControls.Panel panel3DSecure;
         protected global::System.Web.UI.WebControls.Panel panelOracle;
+        protected global::System.Web.UI.WebControls.Panel panelOMNIA;
         protected global::System.Web.UI.WebControls.Panel panelArotron;
         protected global::System.Web.UI.WebControls.Panel panelOS;
         protected global::System.Web.UI.WebControls.Panel panelMOTIVIAN;
         protected global::System.Web.UI.WebControls.Panel panelFACTORING;
         protected global::System.Web.UI.WebControls.Panel panelNEWTON;
+        protected global::System.Web.UI.WebControls.Panel panelNEWTONMutual;
         protected global::System.Web.UI.WebControls.Panel panelImportExport;
         protected global::System.Web.UI.WebControls.Panel panelSWIFT;
         protected global::System.Web.UI.WebControls.Panel panelAssesments;
@@ -117,7 +127,9 @@ namespace AssetMgmt {
         protected global::System.Web.UI.WebControls.Panel panelBankAttachments;
         protected global::System.Web.UI.WebControls.Panel panelSCANHRMS;
         protected global::System.Web.UI.WebControls.Panel panelSpring;
+        protected global::System.Web.UI.WebControls.Panel panelCCR;
         protected global::System.Web.UI.WebControls.Panel panelCode;
+        protected global::System.Web.UI.WebControls.Panel panelQUANTUMFIS;
         protected global::System.Web.UI.WebControls.Panel panelBPMDIGITAL1;
         protected global::System.Web.UI.WebControls.Panel panelBPMLOSSMECorporate;
         protected global::System.Web.UI.WebControls.Panel panelBPMLOSConsume;
@@ -126,6 +138,7 @@ namespace AssetMgmt {
 
 
         protected global::System.Web.UI.WebControls.DropDownList NEWTONAccess;
+        protected global::System.Web.UI.WebControls.DropDownList NEWTONMutualAccess;
         protected global::System.Web.UI.WebControls.DropDownList ImportExportAccess;
         protected global::System.Web.UI.WebControls.DropDownList SWIFTAccess;
         protected global::System.Web.UI.WebControls.DropDownList AssesmentsAccess;
@@ -139,6 +152,8 @@ namespace AssetMgmt {
         protected global::System.Web.UI.WebControls.DropDownList BankAttachmentsAccess;
         protected global::System.Web.UI.WebControls.DropDownList SCANHRMSAccess;
         protected global::System.Web.UI.WebControls.DropDownList SpringAccess;
+        protected global::System.Web.UI.WebControls.DropDownList QUANTUMFISAccess;
+        protected global::System.Web.UI.WebControls.DropDownList CCRAccess;
         protected global::System.Web.UI.WebControls.DropDownList CodeAccess;
         protected global::System.Web.UI.WebControls.DropDownList DM_LMD_Customers;
         protected global::System.Web.UI.WebControls.DropDownList DM_IMPEX;
@@ -158,6 +173,7 @@ namespace AssetMgmt {
 
 
         protected global::System.Web.UI.WebControls.Label L_NEWTONAccess;
+        protected global::System.Web.UI.WebControls.Label L_NEWTONMutualAccess;
         protected global::System.Web.UI.WebControls.Label L_ImportExportAccess;
         protected global::System.Web.UI.WebControls.Label L_SWIFTAccess;
         protected global::System.Web.UI.WebControls.Label L_AssesmentsAccess;
@@ -171,6 +187,8 @@ namespace AssetMgmt {
         protected global::System.Web.UI.WebControls.Label L_BankAttachmentsAccess;
         protected global::System.Web.UI.WebControls.Label L_SCANHRMSAccess;
         protected global::System.Web.UI.WebControls.Label L_SpringAccess;
+        protected global::System.Web.UI.WebControls.Label L_CCRAccess;
+        protected global::System.Web.UI.WebControls.Label L_QUANTUMFISAccess;
         protected global::System.Web.UI.WebControls.Label L_CodeAccess;
         protected global::System.Web.UI.WebControls.Label L_DM_LMD_Customers;
         protected global::System.Web.UI.WebControls.Label L_DM_IMPEX;

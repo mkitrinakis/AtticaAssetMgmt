@@ -79,7 +79,6 @@
      <asp:CheckBoxList ID="Systems" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" AutoPostBack="true" >
         <asp:ListItem>T24</asp:ListItem>
          <asp:ListItem>WINDOWS</asp:ListItem>
-        
         <asp:ListItem>AROTRON</asp:ListItem>
         <asp:ListItem>G4</asp:ListItem>
         <asp:ListItem>3D Secure</asp:ListItem>
@@ -122,8 +121,7 @@
             
     </asp:CheckBoxList>
 
-      <br />
-     <br />
+      
 
     <table>  
     <tr>
@@ -288,6 +286,21 @@
 </table>
           </asp:Panel>
 
+    <asp:Panel ID="panelG4" runat="server" >   
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">G4 (Δικαιώματα)</td><td><asp:DropDownList ID="G4Access" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_G4Access" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+     <asp:Panel ID="panel3DSecure" runat="server" >   
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">3D Secure (Δικαιώματα)</td><td><asp:DropDownList ID="_3DSecureAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_3DSecureAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
 
         <asp:Panel ID="panelDocumentManagement" runat="server" > 
           <p>&nbsp;</p>
@@ -337,13 +350,27 @@
   </table>
           </asp:Panel>
 
-   
+   <asp:Panel ID="panelOMNIA" runat="server" >   
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">OMNIA Ebanking (Δικαιώματα)</td><td><asp:DropDownList ID="OMNIAAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_OMNIAAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
 
      <asp:Panel ID="panelNEWTON" runat="server" > 
           <p>&nbsp;</p>
 <table>
     <tr><td class="col2label required">NEWTON (Δικαιώματα)</td><td><asp:DropDownList ID="NEWTONAccess" runat="server" ></asp:DropDownList>
     <asp:Label ID="L_NEWTONAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+    <asp:Panel ID="panelNEWTONMutual" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required">Αμοιβαία Κεφάλαια NEWTON (Δικαιώματα)</td><td><asp:DropDownList ID="NEWTONMutualAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_NEWTONMutualAccess" runat="server" Text=""></asp:Label></td></tr>
   </table>
           </asp:Panel>
 
@@ -431,13 +458,23 @@
   </table>
           </asp:Panel>
 
-     <asp:Panel ID="panelBankAttachments" runat="server" > 
-          <p>&nbsp;</p>
+     <asp:Panel ID="panelBankAttachments" runat="server" >     
+          <p>&nbsp;</p>  
 <table>
     <tr><td class="col2label required">E-ΚΑΤΑΣΧΕΤΗΡΙΑ (Δικαιώματα)</td><td><asp:DropDownList ID="BankAttachmentsAccess" runat="server" ></asp:DropDownList>
     <asp:Label ID="L_BankAttachmentsAccess" runat="server" Text=""></asp:Label></td></tr>
   </table>  
           </asp:Panel>
+
+    <asp:Panel ID="panelCCR" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required"> CCR Κινήσεις Πιστωτικών Καρτών & Ανοικτών Δανείων (Δικαιώματα)</td><td><asp:DropDownList ID="CCRAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_CCRAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+
 
      <asp:Panel ID="panelSCANHRMS" runat="server" >   
           <p>&nbsp;</p>
@@ -453,6 +490,16 @@
     <asp:Label ID="L_SpringAccess" runat="server" Text=""></asp:Label></td></tr>
   </table>
           </asp:Panel>
+
+    <asp:Panel ID="panelQUANTUMFIS" runat="server" > 
+          <p>&nbsp;</p>
+<table>
+    <tr><td class="col2label required"> QUANTUM-FIS (Δικαιώματα)</td><td><asp:DropDownList ID="QUANTUMFISAccess" runat="server" ></asp:DropDownList>
+    <asp:Label ID="L_QUANTUMFISAccess" runat="server" Text=""></asp:Label></td></tr>
+  </table>
+          </asp:Panel>
+
+
     <asp:Panel ID="panelCode" runat="server" > 
           <p>&nbsp;</p>
 <table>
